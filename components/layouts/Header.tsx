@@ -1,48 +1,32 @@
-import { Box, Flex, Text, Spacer, useColorModeValue, Button } from '@chakra-ui/react';
-
 function Header() {
   return (
-    <Box
-      transition="3s ease"
-      bg={useColorModeValue('light.backgroundDark', 'dark.backgroundDark')}
-      ml={{ base: 0, md: 80, lg: 80 }}
-    >
-      <Flex justifyContent="space-between">
-        <Flex justifyContent="start" flex={2}>
-          <Button as="a" variant="link" p="10" py="8">
-            <Text
-              color={useColorModeValue('light.white', 'dark.white')}
-              bgGradient="linear(to-l, light.primary,light.secondary)"
-              bgClip="text"
-              fontSize="lg"
-            >
-              Lend
-            </Text>
-          </Button>
-          <Button as="a" variant="link" p="10" py="8">
-            <Text color={useColorModeValue('light.white', 'dark.white')} fontSize="lg">
-              Borrow
-            </Text>
-          </Button>
-          <Button as="a" variant="link" p="10" py="8" fontSize="lg">
-            <Text color={useColorModeValue('light.white', 'dark.white')}>Liquidity Mining</Text>
-          </Button>
-        </Flex>
-        <Spacer />
-        <Flex justifyContent="end" flex={1}>
-          <Button as="a" variant="link" p="10" py="8">
-            <Text
-              color={useColorModeValue('light.white', 'dark.white')}
-              bgGradient="linear(to-l, light.primary,dark.secondary)"
-              bgClip="text"
-              fontSize="lg"
-            >
-              Connect Wallet
-            </Text>
-          </Button>
-        </Flex>
-      </Flex>
-    </Box>
+    <header className="text-gray-600 body-font">
+      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a
+          href="www.google.com"
+          className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+        >
+          <img src="/images/logo/logo.png" alt="logo" height={32} width={32} />
+          <span className="ml-3 text-xl">Multi Send</span>
+        </a>
+        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
+          <a href="www.google.com" className="flex items-center mr-7 hover:text-gray-900">
+            <img src="/images/choose_network.png" className="mr-2" alt="choose network" />
+            <div className="text-sm font-semibold text-black">Choose network</div>
+          </a>
+        </nav>
+        <button
+          type="button"
+          className="inline-flex items-center primary border-0 py-3 px-3 text-sm mt-4 md:mt-0 rounded-2xl text-white"
+        >
+          Connect Wallet
+        </button>
+
+        <a href="www.google.com" className="flex items-center hover:text-gray-900 ml-7">
+          <img src="/images/profile_icon.png" alt="Profile network" className="h-14 w-14" />
+        </a>
+      </div>
+    </header>
   );
 }
 

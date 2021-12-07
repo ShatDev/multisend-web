@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
 import { ethers } from 'ethers';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as Web3Provider } from '@ethersproject/providers';
-import theme from '../theme';
+
+import '../styles/global.css';
 
 function getLibrary(provider: any): Web3Provider {
   const library = new ethers.providers.Web3Provider(provider);
@@ -14,9 +14,7 @@ function getLibrary(provider: any): Web3Provider {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <Component {...pageProps} />
     </Web3ReactProvider>
   );
 }
