@@ -1,15 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // eslint-disable-next-line prettier/prettier
-var colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors')
 
 
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    colors:{
+    colors: {
       ...colors,
-      primary:"#000000",
+      primary: '#000000',
     },
     extend: {},
   },
