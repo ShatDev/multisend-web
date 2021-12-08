@@ -17,7 +17,7 @@ function Header() {
         </nav>
         <button
           type="button"
-          className="inline-flex items-center bg-primary border-0 py-3 px-3 text-sm mt-4 md:mt-0 rounded-2xl text-white"
+          className="inline-flex items-center bg-gray-400 border-0 py-3 px-3 text-sm mt-4 md:mt-0 rounded-2xl text-white"
         >
           Connect Wallet
         </button>
