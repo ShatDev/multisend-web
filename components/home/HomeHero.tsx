@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const HomeHero = () => (
   <section className="text-gray-600 body-font">
     <div className="container mx-auto flex px-5 py-12 md:flex-row flex-col items-center bg-white">
@@ -27,8 +29,9 @@ const HomeHero = () => (
                 d="M12 4v16m8-8H4"
               />
             </svg>
-
-            <div className="font-bold">Start Drop</div>
+            <Link href="/distribution">
+              <div className="font-bold">Start Drop</div>
+            </Link>
           </button>
         </div>
       </div>
