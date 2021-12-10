@@ -4,17 +4,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
-import FileUpload from './FileUpload';
-
 /* eslint-disable no-undef */
-const CollectionForm = ({
-  tokenStandards,
-  tokenStandard,
-  setTokenStandard,
-  selectionMethods,
-  selectionMethod,
-  setSelectionMethod,
-}: any) => (
+const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any) => (
   <>
     <div className="flex w-full md:justify-start justify-center items-end">
       <div className="relative mr-4 w-full">

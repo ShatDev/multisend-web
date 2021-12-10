@@ -14,6 +14,8 @@ const DirectForm = ({
   selectionMethods,
   selectionMethod,
   setSelectionMethod,
+  form,
+  onSubmit,
 }: any) => (
   <>
     <div className="flex w-full md:justify-start justify-center items-end">
@@ -28,6 +30,9 @@ const DirectForm = ({
           type="text"
           id="hero-field"
           name="hero-field"
+          value={form.values.tokenAddress}
+          onChange={(e) => form.func.setTokenAddress(e.target.value)}
+          onBlur={(e) => form.func.setTokenAddress(e.target.value)}
           className="w-full bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
       </div>
@@ -82,6 +87,9 @@ const DirectForm = ({
             id="hero-field"
             name="hero-field"
             className="w-full h-96 bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            value={form.values.tokenDetails}
+            onChange={(e) => form.func.setTokenDetails(e.target.value)}
+            onBlur={(e) => form.func.setTokenDetails(e.target.value)}
           />
         </div>
       )}
@@ -121,6 +129,7 @@ const DirectForm = ({
     <button
       type="button"
       className="inline-flex items-center bg-blue-400 border-0 py-3 px-7 text-sm mt-6 rounded-2xl text-white"
+      onClick={onSubmit}
     >
       Submit
     </button>

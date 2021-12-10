@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { parseUnits } from 'ethers/lib/utils';
+import { forEach, split } from 'lodash';
 
 export const minifyAddress = (address: string) =>
   `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
@@ -17,4 +18,42 @@ export const GAS_PRICE_GWEI = {
   fast: parseUnits(GAS_PRICE.Fast, 'gwei').toString(),
   instant: parseUnits(GAS_PRICE.Instant, 'gwei').toString(),
   testnet: parseUnits(GAS_PRICE.Testnet, 'gwei').toString(),
+};
+
+export const splitERC20Token = (value: string) => {
+  const address: any = [];
+  const amount: any = [];
+  const arrayOfLines = value.match(/[^\r\n]+/g);
+  forEach(arrayOfLines, (item) => {
+    const splitData = split(item, ',');
+    address.push(splitData[0]);
+    amount.push(splitData[1]);
+  });
+  return { address, amount };
+};
+
+export const splitERC721Token = (value: string) => {
+  const address: any = [];
+  const tokenId: any = [];
+  const arrayOfLines = value.match(/[^\r\n]+/g);
+  forEach(arrayOfLines, (item) => {
+    const splitData = split(item, ',');
+    address.push(splitData[0]);
+    tokenId.push(splitData[1]);
+  });
+  return { address, tokenId };
+};
+
+export const splitERC1125Token = (value: string) => {
+  const address: any = [];
+  const tokenId: any = [];
+  const amount: any = [];
+  const arrayOfLines = value.match(/[^\r\n]+/g);
+  forEach(arrayOfLines, (item) => {
+    const splitData = split(item, ',');
+    address.push(splitData[0]);
+    tokenId.push(splitData[1]);
+    amount.push(splitData[2]);
+  });
+  return { address, tokenId, amount };
 };

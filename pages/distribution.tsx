@@ -12,6 +12,8 @@ import Layout from '../components/layouts';
 import Summary from '../components/distribution/Summary';
 import DirectForm from '../components/distribution/DirectForm';
 import CollectionForm from '../components/distribution/CollectionForm';
+import { useMultiSendContract } from '../hooks/useContract';
+import config from '../utils/config';
 
 const options = [
   { id: 0, name: 'Direct' },
@@ -20,8 +22,9 @@ const options = [
 ];
 
 const tokenStandards = [
-  { id: 0, name: 'ERC - 721' },
-  { id: 1, name: 'ERC - 1155' },
+  { id: 0, name: 'ERC721' },
+  { id: 1, name: 'ERC1155' },
+  { id: 1, name: 'ERC20' },
 ];
 
 const selectionMethods = [
@@ -29,11 +32,28 @@ const selectionMethods = [
   { id: 1, name: 'CSV' },
 ];
 const Distribution: NextPage = () => {
+  const contract = useMultiSendContract(config.multiSendContractAddress);
+
   const [selectedOption, setSelectedOption] = useState<number>(options[0].id);
   const [tokenStandard, setTokenStandard] = useState<string | undefined>(tokenStandards[0].name);
   const [selectionMethod, setSelectionMethod] = useState<string | undefined>(
     selectionMethods[0].name,
   );
+
+  const [tokenAddress, setTokenAddress] = useState<string>('');
+  const [tokenDetails, setTokenDetails] = useState<string>('');
+
+  const form = {
+    values: { tokenAddress, tokenDetails },
+    func: { setTokenAddress, setTokenDetails },
+  };
+
+  const sendTokens = () => {};
+  const sendItems = () => {};
+
+  const onSubmit = () => {
+    console.log(tokenAddress, tokenDetails, selectedOption, tokenStandard, selectionMethod);
+  };
 
   return (
     <Layout>
@@ -65,15 +85,14 @@ const Distribution: NextPage = () => {
             </div>
             {selectedOption === 0 ? (
               <DirectForm
-                options={options}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption}
+                tokenStandards={tokenStandards}
+                tokenStandard={tokenStandard}
+                setTokenStandard={setTokenStandard}
                 selectionMethods={selectionMethods}
                 selectionMethod={selectionMethod}
                 setSelectionMethod={setSelectionMethod}
-                setTokenStandard={setTokenStandard}
-                tokenStandard={tokenStandard}
-                tokenStandards={tokenStandards}
+                form={form}
+                onSubmit={onSubmit}
               />
             ) : (
               <CollectionForm
@@ -86,6 +105,7 @@ const Distribution: NextPage = () => {
                 setTokenStandard={setTokenStandard}
                 tokenStandard={tokenStandard}
                 tokenStandards={tokenStandards}
+                onSubmit={onSubmit}
               />
             )}
           </div>

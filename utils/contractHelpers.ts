@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { simpleRpcProvider } from './providers';
-import loanAbi from './abi/lending_data.json';
+import multiSend from './abi/multiSend.json';
 import erc721Abi from './abi/erc721.json';
 import erc1155Abi from './abi/erc1155.json';
 import wethAbi from './abi/weth.json';
@@ -15,10 +15,10 @@ const getContract = (
   return new ethers.Contract(address, abi, signerOrProvider);
 };
 
-export const getLoanContract = (
+export const getMultiSendContract = (
   address: string,
   signer?: ethers.Signer | ethers.providers.Provider,
-) => getContract(loanAbi, address, signer);
+) => getContract(multiSend, address, signer);
 
 export const getERC721Contract = (
   address: string,

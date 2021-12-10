@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 
-function Header() {
+function Header({ active, connect }: any) {
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -17,12 +17,15 @@ function Header() {
             <div className="text-sm font-semibold text-black">Choose network</div>
           </a>
         </nav>
-        <button
-          type="button"
-          className="inline-flex items-center bg-blue-400 border-0 py-3 px-3 text-sm mt-4 md:mt-0 rounded-2xl text-white"
-        >
-          Connect Wallet
-        </button>
+        {!active && (
+          <button
+            type="button"
+            className="inline-flex items-center bg-blue-400 border-0 py-3 px-3 text-sm mt-4 md:mt-0 rounded-2xl text-white"
+            onClick={connect}
+          >
+            Connect Wallet
+          </button>
+        )}
 
         <a href="www.google.com" className="flex items-center hover:text-gray-900 ml-7">
           <img src="/images/profile_icon.png" alt="Profile network" className="h-14 w-14" />
