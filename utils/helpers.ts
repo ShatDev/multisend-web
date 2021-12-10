@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { parseUnits } from 'ethers/lib/utils';
-import { forEach, split } from 'lodash';
+import { forEach, split, trim } from 'lodash';
 
 export const minifyAddress = (address: string) =>
   `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
@@ -26,8 +26,8 @@ export const splitERC20Token = (value: string) => {
   const arrayOfLines = value.match(/[^\r\n]+/g);
   forEach(arrayOfLines, (item) => {
     const splitData = split(item, ',');
-    address.push(splitData[0]);
-    amount.push(splitData[1]);
+    address.push(trim(splitData[0]));
+    amount.push(trim(splitData[1]));
   });
   return { address, amount };
 };
@@ -38,8 +38,8 @@ export const splitERC721Token = (value: string) => {
   const arrayOfLines = value.match(/[^\r\n]+/g);
   forEach(arrayOfLines, (item) => {
     const splitData = split(item, ',');
-    address.push(splitData[0]);
-    tokenId.push(splitData[1]);
+    address.push(trim(splitData[0]));
+    tokenId.push(trim(splitData[1]));
   });
   return { address, tokenId };
 };
@@ -51,9 +51,9 @@ export const splitERC1125Token = (value: string) => {
   const arrayOfLines = value.match(/[^\r\n]+/g);
   forEach(arrayOfLines, (item) => {
     const splitData = split(item, ',');
-    address.push(splitData[0]);
-    tokenId.push(splitData[1]);
-    amount.push(splitData[2]);
+    address.push(trim(splitData[0]));
+    tokenId.push(trim(splitData[1]));
+    amount.push(trim(splitData[2]));
   });
   return { address, tokenId, amount };
 };

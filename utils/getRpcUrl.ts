@@ -1,11 +1,7 @@
 import sample from 'lodash/sample';
 
 // Array of available nodes to connect to
-export const nodes = [
-  process.env.REACT_APP_NODE_1,
-  process.env.REACT_APP_NODE_2,
-  process.env.REACT_APP_NODE_3,
-];
+export const nodes = ['https://polygon-mumbai.g.alchemy.com/v2/4nAcRCaih85vrP44VgnEIaNrEPdfw70d'];
 
 const getNodeUrl = () => sample(nodes);
 
