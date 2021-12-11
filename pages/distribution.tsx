@@ -8,12 +8,16 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import toast from 'react-hot-toast';
+import { times } from 'lodash';
 import Layout from '../components/layouts';
 import Summary from '../components/distribution/Summary';
 import DirectForm from '../components/distribution/DirectForm';
 import CollectionForm from '../components/distribution/CollectionForm';
 import { useMultiSendContract } from '../hooks/useContract';
 import config from '../utils/config';
+import { callWithEstimateGas } from '../utils/estimateGas';
+import { splitERC721Token, splitERC1125Token, splitERC20Token } from '../utils/helpers';
 
 const options = [
   { id: 0, name: 'Direct' },
@@ -48,11 +52,71 @@ const Distribution: NextPage = () => {
     func: { setTokenAddress, setTokenDetails },
   };
 
-  const sendTokens = () => {};
-  const sendItems = () => {};
+  const sendTokens = async (values: any) => {
+    try {
+      const tx = await callWithEstimateGas(contract, 'sendTokens', [
+        values.tokenAddress,
+        values.recipients,
+        values.amounts,
+      ]);
+      await tx.wait();
+    } catch (error: any) {
+      if (error.error) {
+        toast.error(error.error.message);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  const sendItems = async (values: any) => {
+    try {
+      const tx = await callWithEstimateGas(contract, 'sendItems', [
+        values.tokenAddress,
+        values.recipients,
+        values.tokenIds,
+        values.amounts,
+        values.tokenType,
+      ]);
+      await tx.wait();
+    } catch (error: any) {
+      if (error.error) {
+        toast.error(error.error.message);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
 
   const onSubmit = () => {
-    console.log(tokenAddress, tokenDetails, selectedOption, tokenStandard, selectionMethod);
+    if (tokenStandard === 'ERC721') {
+      const { address, tokenId } = splitERC721Token(tokenDetails);
+      sendItems({
+        tokenAddress,
+        recipients: address,
+        tokenIds: tokenId,
+        amounts: times(tokenId.length).map(() => `1`),
+        tokenType: 0,
+      });
+    }
+    if (tokenStandard === 'ERC1125') {
+      const { address, tokenId, amount } = splitERC1125Token(tokenDetails);
+      sendItems({
+        tokenAddress,
+        recipients: address,
+        tokenIds: tokenId,
+        amounts: amount,
+        tokenType: 1,
+      });
+    }
+    if (tokenStandard === 'ERC20') {
+      const { address, amount } = splitERC20Token(tokenDetails);
+      sendTokens({
+        tokenAddress,
+        recipients: address,
+        amounts: amount,
+      });
+    }
   };
 
   return (
