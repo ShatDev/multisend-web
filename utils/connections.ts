@@ -20,7 +20,6 @@ export function getErrorMessage(error: Error) {
   if (error instanceof UserRejectedRequestErrorInjected) {
     return 'Please authorize this website to access your Ethereum account.';
   }
-  console.error(error);
   return 'An unknown error occurred. Check the console for more details.';
 }
 

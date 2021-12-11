@@ -11,28 +11,29 @@ const HomeHero = () => (
           We have built a tool to facilitate artists to multi send or drop NFT’s in one click.
         </p>
         <div className="flex justify-center">
-          <button
-            type="button"
-            className="inline-flex items-center bg-black text-primary rounded-xl border-0 py-4 px-7 focus:outline-none hover:bg-gray-600  text-sm"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-3 w-3 mr-2 font-bold"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <Link href="/distribution">
+            <button
+              type="button"
+              className="inline-flex items-center bg-black text-primary rounded-xl border-0 py-4 px-7 focus:outline-none hover:bg-gray-600  text-sm"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={3}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            <Link href="/distribution">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-3 mr-2 font-bold"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+
               <div className="font-bold">Start Drop</div>
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
       <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

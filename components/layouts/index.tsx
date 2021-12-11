@@ -12,7 +12,8 @@ import {
 } from '../../utils/connections';
 
 function Layout({ children }: { children: ReactNode }) {
-  const { active, activate, error } = useWeb3React<ethers.providers.Web3Provider>();
+  const { account, active, activate, error, deactivate } =
+    useWeb3React<ethers.providers.Web3Provider>();
 
   const triedEager = useEagerConnect();
   useInactiveListener(!triedEager);
@@ -25,7 +26,12 @@ function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div>
-      <Header active={active} connect={() => activate(injected)} />
+      <Header
+        account={account}
+        active={active}
+        connect={() => activate(injected)}
+        logOut={() => deactivate()}
+      />
       <div>{children}</div>
     </div>
   );

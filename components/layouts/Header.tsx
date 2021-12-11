@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
+import { minifyAddress } from '../../utils/helpers';
 
-function Header({ active, connect }: any) {
+function Header({ active, connect, logOut, account }: any) {
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -26,10 +27,29 @@ function Header({ active, connect }: any) {
             Connect Wallet
           </button>
         )}
+        {active && (
+          <div className="flex">
+            <div className="h-12 text-white font-medium flex justify-center items-center mb-4 md:mb-0 special_btn ml-4">
+              <div className="inline-flex items-center justify-center h-full bg-white rounded-l-md px-3 text-black">
+                50 MATIC{' '}
+              </div>
+              <div className="flex items-center justify-center h-full bg-yellow-200 rounded-r-md px-3 text-black">
+                {minifyAddress(account)}
+              </div>
+            </div>
+            <button
+              type="button"
+              className="text-red-500 ml-3 special_btn px-3 h-12 font-semibold"
+              onClick={logOut}
+            >
+              Logout
+            </button>
+          </div>
+        )}
 
-        <a href="www.google.com" className="flex items-center hover:text-gray-900 ml-7">
+        {/* <a href="www.google.com" className="flex items-center hover:text-gray-900 ml-7">
           <img src="/images/profile_icon.png" alt="Profile network" className="h-14 w-14" />
-        </a>
+        </a> */}
       </div>
     </header>
   );
