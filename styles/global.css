@@ -12,3 +12,23 @@ body {
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+.field {
+  position: relative;
+  width: 100%;
+}
+
+.pop-up {
+  position: absolute;
+  top: 70px;
+  max-height: 25rem;
+  overflow-y: scroll;
+  width: 100%;
+  background: #fafafa !important;
+  border-radius: 20px;
+  z-index: 10;
+  border-left: 2px solid #fafafa !important;
+  border-right: 2px solid #fafafa !important;
+  border-bottom: 2px solid #fafafa !important;
+  background: #f0f0f0;
+}

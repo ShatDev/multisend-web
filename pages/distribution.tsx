@@ -135,7 +135,7 @@ const Distribution: NextPage = () => {
             <p className="leading-relaxed mt-4 mb-14">Choose the way you want to do the drop!</p>
             <div className="flex items-center mb-10">
               {options.map((item: any) => (
-                <div className="flex items-center mr-6">
+                <div className="flex items-center mr-6" key={item.id}>
                   <button
                     type="button"
                     className={`border-4 ${

@@ -116,7 +116,7 @@ const DirectForm = ({
           </button>
           <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
             {selectionMethods.map((item: any) => (
-              <li className="" onClick={() => setSelectionMethod(item.name)}>
+              <li className="" onClick={() => setSelectionMethod(item.name)} key={item.name}>
                 <a className="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 w-36 block whitespace-no-wrap">
                   {item.name}
                 </a>
