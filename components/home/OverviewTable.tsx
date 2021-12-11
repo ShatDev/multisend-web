@@ -7,6 +7,7 @@ const collectionsQuery = gql`
   query {
     collections {
       name
+      image
       stats {
         daily {
           change
@@ -112,7 +113,16 @@ const OverviewTable = () => {
                 {!loading &&
                   data.collections.map((item: any) => (
                     <tr>
-                      <td className="px-4 py-5 text-sm">{item.name}</td>
+                      <td className=" px-4 py-5 text-sm">
+                        <div className="flex items-center">
+                          <img
+                            alt="content"
+                            className="object-contain object-center h-8 w-8 rounded-full mr-4"
+                            src={item.image}
+                          />
+                          {item.name}
+                        </div>
+                      </td>
                       <td className="px-4 py-5 text-sm flex items-center">
                         {round(item.stats[time].volume, 2)}{' '}
                         <span
