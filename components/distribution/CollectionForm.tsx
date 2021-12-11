@@ -105,8 +105,9 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
     .map((item: any, index: any) => ({
       name: item.name,
       id: index,
+      image: item.image,
     }))
-    .concat({ name: 'custom', id: null });
+    .concat({ name: 'custom', id: null, image: null });
 
   const handleCreateCollection = async () => {
     await createCollection({ variables: { contractAddress, network: 'ETHEREUM' } });
