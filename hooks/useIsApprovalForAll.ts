@@ -8,19 +8,20 @@ const useIsApprovalForAll = (address: string) => {
   const contract = useERC721Contract(address);
   const [loading, setLoading] = useState<boolean>(false);
   const [isApproved, setIsApproved] = useState<boolean>(false);
+
   const checkFunc = useCallback(
     async (accountValue: string) => {
       setLoading(true);
       try {
         const status = await contract.isApprovedForAll(
           accountValue,
-          config.contractAddress.lendingContractAddress,
+          config.multiSendContractAddress,
         );
         setIsApproved(status);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setLoading(false);
+        console.log(error);
       }
     },
     [contract],
@@ -32,14 +33,7 @@ const useIsApprovalForAll = (address: string) => {
     }
   }, [checkFunc, account]);
 
-  const checkAgain = () => {
-    setTimeout(() => {
-      // @ts-ignore
-      checkFunc(account);
-    }, 1000);
-  };
-
-  return { isApproved, loading, checkApproval: checkAgain };
+  return { isApproved, loading, checkApproval: checkFunc };
 };
 
 export default useIsApprovalForAll;

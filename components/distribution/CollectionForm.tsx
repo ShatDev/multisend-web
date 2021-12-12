@@ -4,46 +4,25 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useState, useRef } from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import toast from 'react-hot-toast';
 
 import AutoSuggest from './AutoSuggest';
 import AddCollectionForm from './AddCollectionForm';
 import Suggestion from './Suggestion';
+import apolloClient from '../../utils/apolloClient';
+import DropNFTButton from './DropNFTButton';
 
 const collectionsQuery = gql`
   query {
     collections {
+      id
       name
       image
-      stats {
-        daily {
-          change
-          sales
-          averagePrice
-          volume
-        }
-        weekly {
-          change
-          sales
-          averagePrice
-          volume
-        }
-        monthly {
-          change
-          sales
-          averagePrice
-          volume
-        }
-        totalVolume
-        totalSales
-        totalSupply
-        noOfNFTs
-        noOfOwners
-        averagePrice
-        marketCap
-        floorPrice
-        noOfReports
+      contractAddress
+      owners {
+        address
+        amount
       }
     }
   }
@@ -52,62 +31,57 @@ const collectionsQuery = gql`
 const createCollectionMutation = gql`
   mutation createCollection($contractAddress: String!, $network: Network!) {
     createCollection(contractAddress: $contractAddress, network: $network) {
+      id
       name
-      stats {
-        daily {
-          change
-          sales
-          averagePrice
-          volume
-        }
-        weekly {
-          change
-          sales
-          averagePrice
-          volume
-        }
-        monthly {
-          change
-          sales
-          averagePrice
-          volume
-        }
-        totalVolume
-        totalSales
-        totalSupply
-        noOfNFTs
-        noOfOwners
-        averagePrice
-        marketCap
-        floorPrice
-        noOfReports
+      contractAddress
+      owners {
+        address
+        amount
       }
     }
   }
 `;
 
-/* eslint-disable no-undef */
-const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any) => {
+const CollectionForm = ({
+  tokenStandards,
+  tokenStandard,
+  setTokenStandard,
+  form,
+  loading: submitLoading,
+  onSubmit,
+}: any) => {
   const [open, setOpen] = useState(false);
   const [contractAddress, setContractAddress] = useState<string | null>(null);
+  const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const cancelButtonRef = useRef(null);
 
-  const { data, loading } = useQuery(collectionsQuery);
   const [createCollection, { loading: loading2 }] = useMutation(createCollectionMutation, {
     onCompleted: () => {
       toast.success('Submission successful!');
-      // eslint-disable-next-line no-use-before-define
     },
   });
 
-  const suggestions = data?.collections
+  const fetchCollections = async (e: any) => {
+    setSearchQuery(e.target.value);
+    setLoading(true);
+    apolloClient.query({ query: collectionsQuery, variables: {} }).then(({ data }) => {
+      setCollections(data.collections);
+      setLoading(false);
+    });
+  };
+
+  const suggestions = collections
     .map((item: any, index: any) => ({
       name: item.name,
       id: index,
       image: item.image,
+      contractAddress: item.contractAddress,
+      owners: item.owners,
     }))
-    .concat({ name: 'custom', id: null, image: null });
+    .concat({ name: 'custom', id: null, image: null, contractAddress: null, owners: null });
 
   const handleCreateCollection = async () => {
     await createCollection({ variables: { contractAddress, network: 'ETHEREUM' } });
@@ -128,6 +102,7 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
       )}
       <div className="flex w-full md:justify-start justify-center items-end">
         <AutoSuggest
+          value={searchQuery}
           loading={loading}
           suggestions={suggestions}
           renderSuggestion={(item: any) => {
@@ -144,9 +119,17 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
                 </div>
               );
             }
-            return <Suggestion item={item} />;
+            return (
+              <Suggestion
+                item={item}
+                onClick={() => {
+                  form.func.setOwners(item.owners);
+                  setSearchQuery(item.name);
+                }}
+              />
+            );
           }}
-          onChange={() => {}}
+          onChange={(e: any) => fetchCollections(e)}
         />
         <div className="w-3/12 relative">
           <label
@@ -197,6 +180,8 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
             type="text"
             id="hero-field"
             name="hero-field"
+            value={form.values.tokenAddress}
+            onChange={(e: any) => form.func.setTokenAddress(e.target.value)}
             className="w-full bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
         </div>
@@ -221,6 +206,7 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
               id="hero-field"
               name="hero-field"
               className="w-full bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              disabled
             />
           </div>
           <div className="relative mr-4 w-1/4">
@@ -235,6 +221,7 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
               id="hero-field"
               name="hero-field"
               className="w-full bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              disabled
             />
           </div>
           <div className="relative mr-4 w-1/4">
@@ -249,17 +236,22 @@ const CollectionForm = ({ tokenStandards, tokenStandard, setTokenStandard }: any
               id="hero-field"
               name="hero-field"
               className="w-full bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              disabled
             />
           </div>
         </div>
       </div>
 
-      <button
-        type="button"
-        className="inline-flex items-center bg-blue-400 border-0 py-4 px-8 text-sm mt-6 rounded-2xl text-white text-md"
-      >
-        Submit
-      </button>
+      {form.values.tokenAddress && form.values.owners.length !== 0 && (
+        <DropNFTButton
+          loading={submitLoading}
+          tokenAddress={form.values.tokenAddress}
+          onSubmit={onSubmit}
+          disabled={false}
+        >
+          Submit
+        </DropNFTButton>
+      )}
     </>
   );
 };

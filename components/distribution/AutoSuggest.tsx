@@ -72,7 +72,7 @@ const AutoSuggest = ({
         htmlFor="hero-field"
         className="leading-7  text-blue-500 absolute text-xs -top-3.5 left-5 bg-white"
       >
-        Collection Contract Address
+        Collection Name
       </label>
       <input
         className="w-full bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"

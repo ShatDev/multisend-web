@@ -3,7 +3,6 @@ import { simpleRpcProvider } from './providers';
 import multiSend from './abi/multiSend.json';
 import erc721Abi from './abi/erc721.json';
 import erc1155Abi from './abi/erc1155.json';
-import wethAbi from './abi/weth.json';
 import erc20Abi from './abi/erc20.json';
 
 const getContract = (
@@ -29,11 +28,6 @@ export const getERC1155Contract = (
   address: string,
   signer?: ethers.Signer | ethers.providers.Provider,
 ) => getContract(erc1155Abi, address, signer);
-
-export const getWethAbiContract = (
-  address: string,
-  signer?: ethers.Signer | ethers.providers.Provider,
-) => getContract(wethAbi, address, signer);
 
 export const getERC20AbiContract = (
   address: string,

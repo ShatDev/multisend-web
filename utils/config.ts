@@ -1,6 +1,6 @@
 const config = {
   graphQlUri: 'https://multi-send-test.herokuapp.com/',
-  multiSendContractAddress: '0x11BdA323dffDAA04Bd68DD4b016364dE422C0Bb9',
+  multiSendContractAddress: '0x947D88a39cE8CdB213f5301D47891eCa1F82b4bC',
 };
 
 export default config;

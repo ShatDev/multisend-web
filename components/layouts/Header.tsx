@@ -1,8 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { ethers } from 'ethers';
 import Link from 'next/link';
+import { useState, useCallback, useEffect } from 'react';
+import { useActiveWeb3React } from '../../hooks';
 import { minifyAddress } from '../../utils/helpers';
 
 function Header({ active, connect, logOut, account }: any) {
+  const [balance, setBalance] = useState<any>(0);
+  const { library } = useActiveWeb3React();
+
+  const getBalance = useCallback(async () => {
+    const data: any = await library?.getBalance(account);
+    setBalance(ethers.utils.formatEther(data?.toString()).toString());
+  }, []);
+
+  useEffect(() => {
+    if (active) {
+      getBalance();
+    }
+  }, []);
+
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -31,7 +48,7 @@ function Header({ active, connect, logOut, account }: any) {
           <div className="flex">
             <div className="h-12 text-white font-medium flex justify-center items-center mb-4 md:mb-0 special_btn ml-4">
               <div className="inline-flex items-center justify-center h-full bg-white rounded-l-md px-3 text-black">
-                50 MATIC{' '}
+                {balance} MATIC{' '}
               </div>
               <div className="flex items-center justify-center h-full bg-yellow-200 rounded-r-md px-3 text-black">
                 {minifyAddress(account)}

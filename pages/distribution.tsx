@@ -7,9 +7,9 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { dropRight, times } from 'lodash';
 
 import toast from 'react-hot-toast';
-import { times } from 'lodash';
 import Layout from '../components/layouts';
 import Summary from '../components/distribution/Summary';
 import DirectForm from '../components/distribution/DirectForm';
@@ -28,7 +28,7 @@ const options = [
 const tokenStandards = [
   { id: 0, name: 'ERC721' },
   { id: 1, name: 'ERC1155' },
-  { id: 1, name: 'ERC20' },
+  // { id: 1, name: 'ERC20' },
 ];
 
 const selectionMethods = [
@@ -46,31 +46,38 @@ const Distribution: NextPage = () => {
 
   const [tokenAddress, setTokenAddress] = useState<string>('');
   const [tokenDetails, setTokenDetails] = useState<string>('');
+  const [owners, setOwners] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const form = {
-    values: { tokenAddress, tokenDetails },
-    func: { setTokenAddress, setTokenDetails },
+    values: { tokenAddress, tokenDetails, owners },
+    func: { setTokenAddress, setTokenDetails, setOwners },
   };
 
   const sendTokens = async (values: any) => {
     try {
+      setLoading(true);
       const tx = await callWithEstimateGas(contract, 'sendTokens', [
         values.tokenAddress,
         values.recipients,
         values.amounts,
       ]);
       await tx.wait();
+      setLoading(false);
     } catch (error: any) {
       if (error.error) {
         toast.error(error.error.message);
       } else {
         toast.error(error.message);
       }
+      setLoading(false);
     }
   };
 
   const sendItems = async (values: any) => {
     try {
+      setLoading(true);
       const tx = await callWithEstimateGas(contract, 'sendItems', [
         values.tokenAddress,
         values.recipients,
@@ -79,43 +86,78 @@ const Distribution: NextPage = () => {
         values.tokenType,
       ]);
       await tx.wait();
+      setLoading(false);
+      setTokenAddress('');
+      setTokenDetails('');
+      toast.success('Your NFT dropped successfully!');
     } catch (error: any) {
       if (error.error) {
         toast.error(error.error.message);
       } else {
         toast.error(error.message);
       }
+      setLoading(false);
     }
   };
 
   const onSubmit = () => {
-    if (tokenStandard === 'ERC721') {
-      const { address, tokenId } = splitERC721Token(tokenDetails);
-      sendItems({
-        tokenAddress,
-        recipients: address,
-        tokenIds: tokenId,
-        amounts: times(tokenId.length).map(() => `1`),
-        tokenType: 0,
-      });
-    }
-    if (tokenStandard === 'ERC1125') {
-      const { address, tokenId, amount } = splitERC1125Token(tokenDetails);
-      sendItems({
-        tokenAddress,
-        recipients: address,
-        tokenIds: tokenId,
-        amounts: amount,
-        tokenType: 1,
-      });
-    }
-    if (tokenStandard === 'ERC20') {
-      const { address, amount } = splitERC20Token(tokenDetails);
-      sendTokens({
-        tokenAddress,
-        recipients: address,
-        amounts: amount,
-      });
+    if (selectedOption === 1) {
+      if (tokenStandard === 'ERC721') {
+        const recipients = dropRight(
+          owners.map((item: any) => item.address),
+          owners.length - 3,
+        );
+        sendItems({
+          tokenAddress,
+          recipients,
+          tokenIds: times(recipients.length).map((item) => `${item}`),
+          amounts: times(recipients.length).map(() => `1`),
+          tokenType: 0,
+        });
+      }
+      if (tokenStandard === 'ERC1125') {
+        const { address, tokenId, amount } = splitERC1125Token(tokenDetails);
+        sendItems({
+          tokenAddress,
+          recipients: address,
+          tokenIds: tokenId,
+          amounts: amount,
+          tokenType: 1,
+        });
+      }
+    } else {
+      if (tokenStandard === 'ERC721') {
+        const { address, tokenId } = splitERC721Token(tokenDetails);
+        if (address.length === tokenId.length) {
+          sendItems({
+            tokenAddress,
+            recipients: address,
+            tokenIds: tokenId,
+            amounts: times(tokenId.length).map(() => `1`),
+            tokenType: 0,
+          });
+        } else {
+          toast.error('Please enter right format of address and tokenId');
+        }
+      }
+      if (tokenStandard === 'ERC1125') {
+        const { address, tokenId, amount } = splitERC1125Token(tokenDetails);
+        sendItems({
+          tokenAddress,
+          recipients: address,
+          tokenIds: tokenId,
+          amounts: amount,
+          tokenType: 1,
+        });
+      }
+      if (tokenStandard === 'ERC20') {
+        const { address, amount } = splitERC20Token(tokenDetails);
+        sendTokens({
+          tokenAddress,
+          recipients: address,
+          amounts: amount,
+        });
+      }
     }
   };
 
@@ -156,6 +198,7 @@ const Distribution: NextPage = () => {
                 selectionMethod={selectionMethod}
                 setSelectionMethod={setSelectionMethod}
                 form={form}
+                loading={loading}
                 onSubmit={onSubmit}
               />
             ) : (
@@ -169,6 +212,8 @@ const Distribution: NextPage = () => {
                 setTokenStandard={setTokenStandard}
                 tokenStandard={tokenStandard}
                 tokenStandards={tokenStandards}
+                form={form}
+                loading={loading}
                 onSubmit={onSubmit}
               />
             )}

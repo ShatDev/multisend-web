@@ -4,6 +4,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
+import DropNFTButton from './DropNFTButton';
 import FileUpload from './FileUpload';
 
 /* eslint-disable no-undef */
@@ -15,6 +16,7 @@ const DirectForm = ({
   selectionMethod,
   setSelectionMethod,
   form,
+  loading,
   onSubmit,
 }: any) => (
   <>
@@ -126,13 +128,16 @@ const DirectForm = ({
         </div>
       </div>
     </div>
-    <button
-      type="button"
-      className="inline-flex items-center bg-blue-400 border-0 py-3 px-7 text-sm mt-6 rounded-2xl text-white"
-      onClick={onSubmit}
-    >
-      Submit
-    </button>
+    {form.values.tokenAddress && form.values.tokenDetails && (
+      <DropNFTButton
+        loading={loading}
+        tokenAddress={form.values.tokenAddress}
+        onSubmit={onSubmit}
+        disabled={false}
+      >
+        Submit
+      </DropNFTButton>
+    )}
   </>
 );
 
