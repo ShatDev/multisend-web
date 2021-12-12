@@ -14,8 +14,8 @@ import apolloClient from '../../utils/apolloClient';
 import DropNFTButton from './DropNFTButton';
 
 const collectionsQuery = gql`
-  query {
-    collections {
+  query collections($query: String) {
+    collections(query: $query) {
       id
       name
       image
@@ -67,10 +67,12 @@ const CollectionForm = ({
   const fetchCollections = async (e: any) => {
     setSearchQuery(e.target.value);
     setLoading(true);
-    apolloClient.query({ query: collectionsQuery, variables: {} }).then(({ data }) => {
-      setCollections(data.collections);
-      setLoading(false);
-    });
+    apolloClient
+      .query({ query: collectionsQuery, variables: { query: e.target.value } })
+      .then(({ data }) => {
+        setCollections(data.collections);
+        setLoading(false);
+      });
   };
 
   const suggestions = collections

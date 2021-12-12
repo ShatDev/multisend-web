@@ -65,7 +65,7 @@ const DropNFTButton = ({ loading: submitLoading, tokenAddress, disabled, onSubmi
   return (
     <button
       type="button"
-      className={`inline-flex items-center bg-blue-400 border-0 py-3 px-7 text-sm mt-6 rounded-2xl text-white ${
+      className={`inline-flex items-center bg-green-400 border-0 py-3 px-7 text-sm mt-6 rounded-2xl text-white ${
         (loading || approvalLoading) && 'animate-pulse'
       }`}
       onClick={approvalAction}
