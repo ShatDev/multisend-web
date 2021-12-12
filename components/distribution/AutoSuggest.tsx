@@ -13,7 +13,6 @@ const AutoSuggest = ({
   renderSuggestion,
   onSelectItem = () => {},
   handleQuerySearch = () => {},
-  placeholder,
   whichElementOpenOnEnter = 0,
   renderCustomElements = () => null,
 }: any) => {
@@ -81,7 +80,6 @@ const AutoSuggest = ({
         ref={inputRef}
         value={value}
         autoComplete="off"
-        placeholder={placeholder}
         onFocus={(event) => {
           setEnableSuggestion(true);
           event.target.select();
@@ -92,6 +90,7 @@ const AutoSuggest = ({
           onChange(e);
         }}
         onKeyDown={onKeyDown}
+        placeholder="Search `CryptoPunks`"
       />
 
       {loading ? (
