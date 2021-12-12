@@ -7,7 +7,7 @@ import { minifyAddress } from '../../utils/helpers';
 
 function Header({ active, connect, logOut, account }: any) {
   const [balance, setBalance] = useState<any>(0);
-  const { library } = useActiveWeb3React();
+  const { library, chainId } = useActiveWeb3React();
 
   const getBalance = useCallback(async () => {
     const data: any = await library?.getBalance(account);
@@ -20,6 +20,8 @@ function Header({ active, connect, logOut, account }: any) {
     }
   }, []);
 
+  console.log('chainId', chainId);
+
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -30,10 +32,14 @@ function Header({ active, connect, logOut, account }: any) {
           </div>
         </Link>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <a href="www.google.com" className="flex items-center mr-7 hover:text-gray-900">
-            <img src="/images/choose_network.png" className="mr-2" alt="choose network" />
-            <div className="text-sm font-semibold text-black">Choose network</div>
-          </a>
+          {active && (
+            <div className="flex items-center mr-7 hover:text-gray-900">
+              <img src="/images/choose_network.png" className="mr-2" alt="choose network" />
+              <div className="text-sm font-semibold text-black">
+                {chainId === 137 ? 'Polygon Mainnet' : 'Polygon Testnet'}
+              </div>
+            </div>
+          )}
         </nav>
         {!active && (
           <button

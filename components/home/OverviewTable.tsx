@@ -111,6 +111,9 @@ const OverviewTable = () => {
                     </tr>
                   ))}
                 {!loading &&
+                  data &&
+                  data.collections &&
+                  data.collections.length !== 0 &&
                   data.collections.map((item: any) => (
                     <tr>
                       <td className=" px-4 py-5 text-sm">
