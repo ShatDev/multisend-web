@@ -184,8 +184,12 @@ const Distribution: NextPage = () => {
                       selectedOption === item.id ? 'bg-yellow-500' : 'bg-white'
                     } border-yellow-300  rounded-full w-8 h-8 focus:outline-none mr-3`}
                     onClick={() => setSelectedOption(item.id)}
+                    disabled={item.id === 2}
                   />
-                  <div className="text-black font-semibold text-lg">{item.name}</div>
+                  <div className="text-black font-semibold text-lg">
+                    {item.name}{' '}
+                    {item.id === 2 && <span className="text-xs text-green-500">coming soon</span>}
+                  </div>
                 </div>
               ))}
             </div>
@@ -218,7 +222,13 @@ const Distribution: NextPage = () => {
               />
             )}
           </div>
-          <Summary />
+          <Summary
+            form={form}
+            owners={owners}
+            tokenStandard={tokenStandard}
+            tokenDetails={tokenDetails}
+            selectedOption={selectedOption}
+          />
         </div>
       </section>
     </Layout>

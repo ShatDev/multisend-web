@@ -2,8 +2,8 @@
 import { parseUnits } from 'ethers/lib/utils';
 import { forEach, split, trim } from 'lodash';
 
-export const minifyAddress = (address: string) =>
-  `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
+export const minifyAddress = (address: string, size?: number | undefined) =>
+  `${address.slice(0, size || 6)}...${address.slice(-size || -6, address.length)}`;
 
 // eslint-disable-next-line no-shadow
 export enum GAS_PRICE {
