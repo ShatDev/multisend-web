@@ -90,6 +90,9 @@ const DirectForm = ({
             name="hero-field"
             className="w-full h-96 bg-white rounded-2xl border bg-opacity-50 border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-gray-700 py-4 px-3 leading-8 transition-colors duration-200 ease-in-out"
             value={form.values.tokenDetails}
+            placeholder="0x314ab97b76e39d63c78d5c86c2daf8eaa306b182 3.141592
+            0x271bffabd0f79b8bd4d7a1c245b7ec5b576ea98a,2.7182
+            0x141ca95b6177615fb1417cf70e930e102bf8f584=1.41421"
             onChange={(e) => form.func.setTokenDetails(e.target.value)}
             onBlur={(e) => form.func.setTokenDetails(e.target.value)}
           />
