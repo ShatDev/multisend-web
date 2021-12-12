@@ -51,7 +51,7 @@ function Header({ active, connect, logOut, account }: any) {
                 {balance} MATIC{' '}
               </div>
               <div className="flex items-center justify-center h-full bg-yellow-200 rounded-r-md px-3 text-black">
-                {minifyAddress(account)}
+                {minifyAddress(account, 6)}
               </div>
             </div>
             <button

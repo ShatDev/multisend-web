@@ -2,7 +2,7 @@
 import { parseUnits } from 'ethers/lib/utils';
 import { forEach, split, trim } from 'lodash';
 
-export const minifyAddress = (address: string, size?: number | undefined) =>
+export const minifyAddress = (address: string, size: number) =>
   `${address.slice(0, size || 6)}...${address.slice(-size || -6, address.length)}`;
 
 // eslint-disable-next-line no-shadow
