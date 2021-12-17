@@ -189,9 +189,7 @@ const CollectionForm = ({
         </div>
         <div className="w-3/12 relative" />
       </div>
-      <div className="text-sm text-gray-400 mt-4 ml-7 mb-16">
-        This is the address of the collection of your address
-      </div>
+      <div className="text-sm text-gray-400 mt-4 ml-7 mb-16">This is your collection’s address</div>
       <div className="w-full">
         <h1 className="title-font font-bold text-4xl text-gray-900">Choose the Attributes</h1>
         <p className="leading-relaxed mt-4 mb-8">Choose the way you want to do the drop!</p>

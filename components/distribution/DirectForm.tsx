@@ -26,7 +26,7 @@ const DirectForm = ({
           htmlFor="hero-field"
           className="leading-7  text-blue-500 absolute text-xs -top-3.5 left-5 bg-white"
         >
-          Token address
+          Collection Address
         </label>
         <input
           type="text"
