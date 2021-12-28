@@ -8,7 +8,7 @@ import {
 
 declare let window: any;
 
-export const injected = new InjectedConnector({ supportedChainIds: [137, 80001] });
+export const injected = new InjectedConnector({ supportedChainIds: [137] });
 
 export function getErrorMessage(error: Error) {
   if (error instanceof NoEthereumProviderError) {

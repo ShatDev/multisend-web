@@ -140,7 +140,7 @@ const Distribution: NextPage = () => {
           toast.error('Please enter right format of address and tokenId');
         }
       }
-      if (tokenStandard === 'ERC1125') {
+      if (tokenStandard === 'ERC1155') {
         const { address, tokenId, amount } = splitERC1125Token(tokenDetails);
         sendItems({
           tokenAddress,

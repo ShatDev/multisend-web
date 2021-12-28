@@ -19,8 +19,8 @@ const DropNFTButton = ({ loading: submitLoading, tokenAddress, disabled, onSubmi
       await tx.wait();
       setTimeout(() => {
         checkApproval(tokenAddress);
-      }, 10000);
-      setApprovalLoading(false);
+        setApprovalLoading(false);
+      }, 4000);
     } catch (error: any) {
       setApprovalLoading(false);
       toast.error(error.message);
