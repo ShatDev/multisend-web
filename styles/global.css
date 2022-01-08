@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 body {
-  background-color: rgba(212, 240, 39, 0.1);
+  background-color: #000;
   mix-blend-mode: normal;
 }
 
@@ -18,17 +18,19 @@ body {
   width: 100%;
 }
 
-.pop-up {
-  position: absolute;
-  top: 70px;
-  max-height: 25rem;
-  overflow-y: scroll;
-  width: 100%;
-  background: #fafafa !important;
-  border-radius: 20px;
-  z-index: 10;
-  border-left: 2px solid #fafafa !important;
-  border-right: 2px solid #fafafa !important;
-  border-bottom: 2px solid #fafafa !important;
-  background: #f0f0f0;
+.btn_border_primary {
+  border-image: linear-gradient(180deg, #a8ff78, #78ffd6) 10;
+}
+
+.btn_border_primary:hover {
+  border-image: linear-gradient(180deg, #78ffd6, #a8ff78) 10;
+  box-shadow: 2px 3px 9px #a8ff78;
+}
+
+.btn_bg_primary {
+  background: linear-gradient(90deg, #a8ff78, #78ffd6);
+}
+
+.btn_bg_primary:hover {
+  box-shadow: 2px 3px 9px #a8ff78;
 }
