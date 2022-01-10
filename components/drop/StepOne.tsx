@@ -48,7 +48,7 @@ const StepOne = ({
 
   return (
     <div>
-      <div className="flex-row flex justify-between py-10">
+      <div className="flex-row flex justify-between pb-10">
         <h1 className="text-xl text-white">Welcome</h1>
         <h1 className="text-base text-white">2 step to complete </h1>
       </div>
