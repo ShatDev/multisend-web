@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import BatchDrops from '../components/home/BatchDrops';
 import HomeHero from '../components/home/HomeHero';
 
 import Layout from '../components/layouts';
-import OverviewTable from '../components/home/OverviewTable';
+// import OverviewTable from '../components/home/OverviewTable';
 
 const Home: NextPage = () => (
   <Layout>
@@ -14,7 +15,7 @@ const Home: NextPage = () => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <HomeHero />
-    <OverviewTable />
+    <BatchDrops />
   </Layout>
 );
 
