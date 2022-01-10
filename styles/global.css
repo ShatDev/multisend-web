@@ -7,6 +7,7 @@
 body {
   background-color: #000;
   mix-blend-mode: normal;
+  font-family: 'Inter', sans-serif;
 }
 
 .home_hero {
@@ -30,6 +31,15 @@ body {
   box-shadow: 0px 0px 20px #a8ff78;
 }
 
+.btn_bg_secondary {
+  background: linear-gradient(90deg, #00eadf, #ff8b8b);
+}
+
+.btn_border_secondary:hover {
+  border-image: linear-gradient(90deg, #00eadf, #ff8b8b) 10;
+  box-shadow: 0px 0px 20px #ff8b8b;
+}
+
 .btn_bg_primary {
   background: linear-gradient(90deg, #a8ff78, #78ffd6);
 }
@@ -40,6 +50,20 @@ body {
 
 .bg_fade_gradient {
   background-image: linear-gradient(to bottom, black 77%, transparent);
+}
+
+.input_border_primary {
+  border-image: linear-gradient(90deg, #00eadf, #ff8b8b) 10;
+}
+
+.drop_container {
+  border-image: linear-gradient(90deg, #00eadf, #f5b544) 10;
+  background: linear-gradient(
+    89.74deg,
+    rgba(0, 234, 223, 0.11) 1.15%,
+    rgba(245, 181, 68, 0.11) 104.92%
+  );
+  backdrop-filter: blur(40px);
 }
 
 .gradient_text {
