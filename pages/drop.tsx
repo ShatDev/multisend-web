@@ -3,16 +3,29 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import Head from 'next/head';
 import StepOne from '../components/drop/StepOne';
+import StepTwo from '../components/drop/StepTwo';
 
 import Layout from '../components/layouts';
 // import OverviewTable from '../components/home/OverviewTable';
 
-const Home: NextPage = () => {
-  const [step, setStep] = useState(1);
+export interface DropDetails {
+  recipientAddress: string[];
+  tokenId: string[];
+  amount: string[];
+}
 
+const Home: NextPage = () => {
+  const [step, setStep] = useState(2);
   const [tokenType, setTokenType] = useState('ERC20');
   const [dropType, setDropType] = useState('DIRECT');
   const [tokenAddress, setTokenAddress] = useState<string | null>(null);
+  const [dropDetails, setDropDetails] = useState<DropDetails>({
+    recipientAddress: [],
+    tokenId: [],
+    amount: [],
+  });
+
+  const [dropInputValue, setDropInputValue] = useState('');
 
   return (
     <Layout isDrop>
@@ -31,6 +44,15 @@ const Home: NextPage = () => {
             tokenAddress={tokenAddress}
             setTokenAddress={setTokenAddress}
             setStep={setStep}
+          />
+        )}
+        {step === 2 && (
+          <StepTwo
+            dropInputValue={dropInputValue}
+            dropDetails={dropDetails}
+            setDropInputValue={setDropInputValue}
+            setDropDetails={setDropDetails}
+            goBack={() => setStep(step - 1)}
           />
         )}
       </div>

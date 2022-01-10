@@ -66,6 +66,10 @@ body {
   backdrop-filter: blur(40px);
 }
 
+.drop_zone {
+  border-image: linear-gradient(90deg, #00eadf, #ff8b8b) 10;
+}
+
 .gradient_text {
   /* Fallback: Set a background color. */
   background-color: red;

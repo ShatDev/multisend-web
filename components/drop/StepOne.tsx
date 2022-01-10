@@ -92,7 +92,7 @@ const StepOne = ({
               onChange={(e: any) => setTokenAddress(e?.target.value)}
             />
             {!isValidAddress && (
-              <p className="text-base text-rose-600 py-2">Please enter valid token address</p>
+              <p className="text-base text-rose-600 py-2">Please enter valid token address!</p>
             )}
           </div>
         </div>
