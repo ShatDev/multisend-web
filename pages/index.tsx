@@ -2,6 +2,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import BatchDrops from '../components/home/BatchDrops';
+import DropAgainstCollections from '../components/home/DropAgainstCollections';
 import HomeHero from '../components/home/HomeHero';
 
 import Layout from '../components/layouts';
@@ -16,6 +17,7 @@ const Home: NextPage = () => (
     </Head>
     <HomeHero />
     <BatchDrops />
+    <DropAgainstCollections />
   </Layout>
 );
 
