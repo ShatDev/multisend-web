@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { useState } from 'react';
 import Button from '../elements/Button';
 import Input from '../elements/Input';
+import StepOneProceedButton from './StepOneProceedButton';
 
 interface StepOneProps {
   tokenType: string;
@@ -30,21 +31,7 @@ const StepOne = ({
   setTokenAddress,
   setStep,
 }: StepOneProps) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [isValidAddress, setIsValidAddress] = useState(true);
-
-  const onHandleProceed = () => {
-    setIsLoading(true);
-    setIsLoading(true);
-    if (tokenAddress) {
-      const isValid = ethers.utils.isAddress(tokenAddress);
-      setIsValidAddress(isValid);
-      if (isValid) {
-        setStep(2);
-      }
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div>
@@ -98,9 +85,12 @@ const StepOne = ({
         </div>
         {tokenAddress && (
           <div className="flex justify-center">
-            <Button isLoading={isLoading} onClick={onHandleProceed}>
-              Proceed
-            </Button>
+            <StepOneProceedButton
+              address={tokenAddress}
+              tokenType={tokenType}
+              setIsValidAddress={setIsValidAddress}
+              setStep={setStep}
+            />
           </div>
         )}
       </div>
