@@ -48,6 +48,8 @@ const Home: NextPage = () => {
         )}
         {step === 2 && (
           <StepTwo
+            tokenType={tokenType}
+            dropType={dropType}
             dropInputValue={dropInputValue}
             dropDetails={dropDetails}
             setDropInputValue={setDropInputValue}

@@ -10,6 +10,8 @@ import Dropzone from '../elements/Dropzone';
 import TextArea from '../elements/TextArea';
 
 interface StepTwoProps {
+  tokenType: string;
+  dropType: string;
   dropInputValue: string;
   dropDetails: DropDetails;
   setDropInputValue: (value: string) => void;
@@ -18,6 +20,8 @@ interface StepTwoProps {
 }
 
 const StepOne = ({
+  tokenType,
+  dropType,
   dropInputValue,
   dropDetails,
   setDropInputValue,
@@ -26,8 +30,31 @@ const StepOne = ({
 }: StepTwoProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isManual, setIsManual] = useState(false);
+  const [csvData, setCsvData] = useState();
 
-  const onHandleProceed = () => {};
+  const onHandleProceed = () => {
+    if (tokenType === 'ERC20') {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    }
+    if (tokenType === 'ERC721') {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    }
+    if (tokenType === 'ERC1155') {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    }
+  };
 
   return (
     <div>
@@ -55,10 +82,12 @@ const StepOne = ({
             0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,2
             0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,5
             0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,3"
+              value={dropInputValue}
+              onChange={(e: any) => setDropInputValue(e.target.value)}
             />
           </div>
         ) : (
-          <Dropzone />
+          <Dropzone onChange={(data) => setCsvData(data)} />
         )}
 
         {!isManual && (
