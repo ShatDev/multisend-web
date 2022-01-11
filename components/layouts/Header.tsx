@@ -6,7 +6,7 @@ import { useActiveWeb3React } from '../../hooks';
 import Button from '../elements/Button';
 import ConnectedButton from './ConnectedButton';
 
-function Header({ active, connect, logOut, account }: any) {
+function Header({ active, open, connect, logOut, account }: any) {
   const [balance, setBalance] = useState<any>(0);
   const { library, chainId } = useActiveWeb3React();
 
@@ -63,7 +63,7 @@ function Header({ active, connect, logOut, account }: any) {
           <a className="mr-6">Tutorial</a>
           <a className="mr-6">FAQ</a>
         </nav>
-        {!active && <Button onClick={connect}>Connect Wallet</Button>}
+        {!active && <Button onClick={open}>Connect Wallet</Button>}
         {active && (
           <ConnectedButton
             balance={balance}

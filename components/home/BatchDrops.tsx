@@ -12,7 +12,7 @@ const BatchDrops = () => (
     <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
       <div className="w-1/2 mb-10 md:mb-0">
         <img
-          className="object-cover object-center rounded"
+          className="object-contain object-center rounded w-10/12"
           alt="hero"
           src="/images/batch_drop.png"
         />

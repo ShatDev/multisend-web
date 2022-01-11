@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3React } from '@web3-react/core';
 
@@ -12,8 +12,13 @@ import {
   injected,
 } from '../../utils/connections';
 import Footer from './Footer';
+import WalletLoginModal from './WalletLoginModal';
+import AccountInfoModal from './AccountInfoModal';
 
 function Layout({ isDrop = false, children }: { isDrop?: boolean; children: ReactNode }) {
+  const [chooseWalletPopupOpen, setChooseWalletPopupOpen] = useState(false);
+  const [accountInfoPopupOpen, setAccountInfoPopupOpen] = useState(false);
+
   const { account, active, activate, error, deactivate } =
     useWeb3React<ethers.providers.Web3Provider>();
 
@@ -27,13 +32,19 @@ function Layout({ isDrop = false, children }: { isDrop?: boolean; children: Reac
   }, [error]);
 
   return (
-    <div style={isDrop ? { backgroundImage: `url('/images/dropBackground.png)` } : {}}>
+    <div
+      className="relative"
+      style={isDrop ? { backgroundImage: `url('/images/dropBackground.png)` } : {}}
+    >
       <Header
         account={account}
         active={active}
+        open={() => setChooseWalletPopupOpen(true)}
         connect={() => activate(injected)}
         logOut={() => deactivate()}
       />
+      {accountInfoPopupOpen && <AccountInfoModal close={() => setAccountInfoPopupOpen(false)} />}
+      {chooseWalletPopupOpen && <WalletLoginModal close={() => setChooseWalletPopupOpen(false)} />}
       <div>{children}</div>
       <Footer />
     </div>

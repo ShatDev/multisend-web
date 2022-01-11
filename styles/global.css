@@ -83,6 +83,21 @@ body {
   backdrop-filter: blur(45px);
 }
 
+.popup_gradient {
+  border-image: linear-gradient(90deg, #00eadf, #f5b544) 10;
+  background: linear-gradient(
+    90.08deg,
+    rgba(0, 234, 223, 0.18) -0.37%,
+    rgba(215, 0, 234, 0.18) 110.97%
+  );
+  backdrop-filter: blur(45px);
+}
+
+.bg-blur {
+  background: rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(64px);
+}
+
 .gradient_text {
   /* Fallback: Set a background color. */
   background-color: red;
