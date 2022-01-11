@@ -5,7 +5,7 @@ const HomeHero = () => (
     {/* <div className="absolute bg_fade_gradient w-full h-full top-0 px-32" /> */}
     <div className="container px-5 md:py-24 mx-auto flex flex-wrap items-center">
       <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-        <h1 className="title-font font-medium text-7xl text-white">
+        <h1 className="title-font font-medium text-4xl md:text-7xl text-white">
           Transmit tokens or Nft’s to multiple addresses in one click
         </h1>
       </div>

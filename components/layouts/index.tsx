@@ -11,6 +11,7 @@ import {
   getErrorMessage,
   injected,
 } from '../../utils/connections';
+import Footer from './Footer';
 
 function Layout({ isDrop = false, children }: { isDrop?: boolean; children: ReactNode }) {
   const { account, active, activate, error, deactivate } =
@@ -34,6 +35,7 @@ function Layout({ isDrop = false, children }: { isDrop?: boolean; children: Reac
         logOut={() => deactivate()}
       />
       <div>{children}</div>
+      <Footer />
     </div>
   );
 }

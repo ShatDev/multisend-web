@@ -1,7 +1,15 @@
 import GradientCard from '../elements/GradientCard';
 
 const DropAgainstCollections = () => (
-  <section className="relative text-gray-600 body-font py-16">
+  <section
+    className="relative text-gray-600 body-font py-16"
+    style={{
+      backgroundImage: 'url("/images/drop_bg.png")',
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'right',
+    }}
+  >
     {/* <div className="absolute bg_fade_gradient w-full h-full top-0 px-32" /> */}
     <div className="lg:flex-grow lg:px-24 md:px-16 flex flex-col md:items-start md:text-left items-center text-center">
       <h1 className="title-font text-3xl md:text-7xl mb-12 font-medium text-white">
@@ -13,7 +21,7 @@ const DropAgainstCollections = () => (
         can also specify the attributes you want to choose to filter our addresses you want to drop
         your NFT’s against.
       </p>
-      <div className="flex w-full justify-end">
+      <div className="flex w-full justify-end px-5 md:px-0">
         <div className="flex justify-between flex-col md:flex-row relative w-full md:w-4/6">
           <GradientCard
             title="Top Traders"
