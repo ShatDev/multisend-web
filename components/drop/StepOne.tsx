@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-unused-vars */
 import { ethers } from 'ethers';
 import { useState } from 'react';
@@ -42,7 +44,14 @@ const StepOne = ({
     <div>
       <div className="flex-row flex justify-between pb-10">
         <h1 className="text-xl text-white">
-          {dropType === 'DIRECT' ? 'Welcome' : 'Filter the collection'}
+          {dropType === 'DIRECT' ? (
+            'Welcome'
+          ) : (
+            <span
+              className="cursor-pointer"
+              onClick={() => setDropType('DIRECT')}
+            >{`< Filter the collection`}</span>
+          )}
         </h1>
         <h1 className="text-base text-white">2 step to complete </h1>
       </div>
