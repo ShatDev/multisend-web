@@ -4,7 +4,7 @@ import makeAnimated from 'react-select/animated';
 const animatedComponents = makeAnimated();
 
 const customStyles = {
-  option: (provided: any, state: any) => ({
+  option: (provided: any) => ({
     ...provided,
     color: 'black',
     padding: 15,

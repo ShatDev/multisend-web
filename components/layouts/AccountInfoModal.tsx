@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
-import Input from '../elements/Input';
 
 const AccountInfoModal = ({ close }: any) => (
   <div className="flex items-center justify-center absolute w-screen h-screen bg-blur overflow-clip z-50 top-0 overflow-x-hidden">
