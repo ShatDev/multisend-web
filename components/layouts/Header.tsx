@@ -6,7 +6,7 @@ import { useActiveWeb3React } from '../../hooks';
 import Button from '../elements/Button';
 import ConnectedButton from './ConnectedButton';
 
-function Header({ active, open, connect, logOut, account }: any) {
+function Header({ active, open, logOut, account }: any) {
   const [balance, setBalance] = useState<any>(0);
   const { library, chainId } = useActiveWeb3React();
 
@@ -45,7 +45,18 @@ function Header({ active, open, connect, logOut, account }: any) {
         logo: '/images/crypto_icons/cryptocurrency_eth.png',
       };
     }
-    return null;
+    if (id === 3) {
+      return {
+        name: 'ROPSTEN',
+        symbol: 'ETH',
+        logo: '/images/crypto_icons/cryptocurrency_eth.png',
+      };
+    }
+    return {
+      name: 'MAINNET',
+      symbol: 'ETH',
+      logo: '/images/crypto_icons/cryptocurrency_eth.png',
+    };
   };
 
   return (

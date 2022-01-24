@@ -10,14 +10,13 @@ import Layout from '../components/layouts';
 
 export interface DropDetails {
   recipientAddress: string[];
-  tokenId: string[];
+  tokenId?: string[];
   amount: string[];
 }
 
 const Home: NextPage = () => {
   const [step, setStep] = useState(2);
   const [tokenType, setTokenType] = useState('ERC20');
-  const [network, setNetwork] = useState('Matic');
   const [dropType, setDropType] = useState('DIRECT');
   const [tokenAddress, setTokenAddress] = useState<string | null>(null);
   const [dropDetails, setDropDetails] = useState<DropDetails>({
@@ -43,10 +42,8 @@ const Home: NextPage = () => {
             setTokenType={setTokenType}
             setDropType={setDropType}
             tokenAddress={tokenAddress}
-            network={network}
             setTokenAddress={setTokenAddress}
             setStep={setStep}
-            setNetwork={setNetwork}
           />
         )}
         {step === 2 && (

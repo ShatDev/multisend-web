@@ -11,7 +11,7 @@ const ConnectedButton = ({ balance, account, currentNetwork, logOut }: any) => (
     </button>
     <div className="flex btn_border_primary hover_btn border-2  text-white">
       <div className="flex items-center justify-center btn_bg_primary px-4 py-2 text-black">
-        {balance} {currentNetwork?.symbol}{' '}
+        {parseFloat(balance).toFixed(4)} {currentNetwork?.symbol}{' '}
       </div>
       <div className="flex items-center justify-center text-white px-4 py-2">
         {minifyAddress(account, 6)}

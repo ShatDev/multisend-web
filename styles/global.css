@@ -5,6 +5,8 @@
 @import url('/css/AvenirNextLTPro-Bold.otf');
 @import url('/css/AvenirNextLTPro-It.otf');
 @import url('/css/AvenirNextLTPro-Regular.otf');
+@import 'codemirror/lib/codemirror.css';
+@import 'codemirror/theme/material.css';
 
 body {
   background-color: #000;
@@ -96,6 +98,29 @@ body {
 .bg-blur {
   background: rgba(0, 0, 0, 0.14);
   backdrop-filter: blur(64px);
+}
+.ReactCodeMirror {
+  font-size: 17px;
+}
+
+.CodeMirror-scroll {
+  background-color: #000;
+  color: white;
+  padding-left: 10px;
+}
+.CodeMirror-cursor {
+  background-color: #ffffff !important;
+}
+
+.cm-animate-fat-cursor {
+  background-color: #ffffff !important;
+}
+.CodeMirror-gutters {
+  background: black;
+  border: 0 !important;
+}
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid #ffffff !important;
 }
 
 .gradient_text {

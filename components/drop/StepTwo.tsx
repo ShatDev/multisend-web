@@ -2,12 +2,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-unused-vars */
-import { ethers } from 'ethers';
 import { useState } from 'react';
 import { DropDetails } from '../../pages/drop';
 import Button from '../elements/Button';
-import Dropzone from '../elements/Dropzone';
-import TextArea from '../elements/TextArea';
+import Direct from './Direct';
+import AgainstCollection from './AgainstCollection';
+import { splitERC1125Token, splitERC20Token, splitERC721Token } from './helpers';
 
 interface StepTwoProps {
   tokenType: string;
@@ -32,28 +32,73 @@ const StepOne = ({
   const [isManual, setIsManual] = useState(false);
   const [csvData, setCsvData] = useState();
 
+  const handleERC20 = () => {
+    if (isManual) {
+      const { address, amount } = splitERC20Token(dropInputValue);
+      setDropDetails({
+        recipientAddress: address,
+        amount,
+      });
+    } else {
+      setDropDetails({
+        recipientAddress: [],
+        amount: [],
+      });
+    }
+  };
+
+  const handleERC721 = () => {
+    if (isManual) {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    } else {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    }
+  };
+
+  const handleERC1155 = () => {
+    if (isManual) {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    } else {
+      setDropDetails({
+        recipientAddress: [],
+        tokenId: [],
+        amount: [],
+      });
+    }
+  };
+
   const onHandleProceed = () => {
     if (tokenType === 'ERC20') {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
+      handleERC20();
     }
     if (tokenType === 'ERC721') {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
+      handleERC721();
     }
     if (tokenType === 'ERC1155') {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
+      handleERC1155();
     }
+  };
+
+  const onHandleCsvData = (values: any) => {
+    let string = '';
+    values.map((item: any) => {
+      string = `${string + item.address},${item.amount}\n`;
+      return null;
+    });
+    setDropInputValue(string);
+    setIsManual(true);
   };
 
   return (
@@ -64,46 +109,20 @@ const StepOne = ({
         </div>
         <h1 className="text-base text-white">2 step to complete </h1>
       </div>
-      <div className="px-12">
-        <div className="flex-row flex justify-between">
-          <h1 className="text-base text-white">4. Please provide recipients </h1>
-          <a
-            className="text-base text-white font-semibold cursor-pointer gradient_text"
-            onClick={() => setIsManual(!isManual)}
-          >
-            {isManual ? 'import csv' : 'input manually'}
-          </a>
-        </div>
-        {isManual ? (
-          <div className="mt-2">
-            <TextArea
-              rows={10}
-              placeholder="0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,1
-            0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,2
-            0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,5
-            0x314ab97b76e39d63c78d5c86c2daf8eaa306b182,3"
-              value={dropInputValue}
-              onChange={(e: any) => setDropInputValue(e.target.value)}
-            />
-          </div>
-        ) : (
-          <Dropzone onChange={(data) => setCsvData(data)} />
-        )}
-
-        {!isManual && (
-          <a
-            className="text-white py-2 text-sm cursor-pointer"
-            href="/images/erc20.csv"
-            target="_blank"
-          >
-            Show Example CSV
-          </a>
-        )}
-        <div className="flex justify-center mt-10">
-          <Button isLoading={isLoading} onClick={onHandleProceed}>
-            Proceed
-          </Button>
-        </div>
+      {dropType === 'DIRECT' && (
+        <Direct
+          dropInputValue={dropInputValue}
+          isManual={isManual}
+          setIsManual={setIsManual}
+          setDropInputValue={setDropInputValue}
+          setCsvData={onHandleCsvData}
+        />
+      )}
+      {dropType === 'AGAINST_COLLECTION' && <AgainstCollection />}
+      <div className="flex justify-center mt-10">
+        <Button isLoading={isLoading} onClick={onHandleProceed}>
+          Proceed
+        </Button>
       </div>
     </div>
   );

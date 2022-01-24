@@ -31,7 +31,6 @@ const StepOneProceedButton = ({
     try {
       const total = await erc20Contract.totalSupply();
       const allowance = await erc20Contract.allowance(account, config.multiSendContractAddress);
-      console.log('allowance', total.toString());
       if (allowance.toNumber() <= parseFloat(total.toString())) {
         const tx = await callWithEstimateGas(erc20Contract, 'approve', [
           config.multiSendContractAddress,
@@ -54,6 +53,7 @@ const StepOneProceedButton = ({
     setLoading(true);
     try {
       const status = await nftContract.isApprovedForAll(account, config.multiSendContractAddress);
+      // console.log('status', status);
       if (!status) {
         const tx = await callWithEstimateGas(nftContract, 'setApprovalForAll', [
           config.multiSendContractAddress,
@@ -67,6 +67,7 @@ const StepOneProceedButton = ({
       setLoading(false);
     } catch (error: any) {
       toast.error(error.message.split('\n')[0]);
+      console.log('error', error);
       setLoading(false);
     }
   };
