@@ -6,6 +6,8 @@ import StepOne from '../components/drop/StepOne';
 import StepTwo from '../components/drop/StepTwo';
 
 import Layout from '../components/layouts';
+import StepThree from '../components/drop/StepThree';
+import StepFour from '../components/drop/StepFour';
 // import OverviewTable from '../components/home/OverviewTable';
 
 export interface DropDetails {
@@ -15,7 +17,7 @@ export interface DropDetails {
 }
 
 const Home: NextPage = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const [tokenType, setTokenType] = useState('ERC20');
   const [dropType, setDropType] = useState('DIRECT');
   const [tokenAddress, setTokenAddress] = useState<string | null>(null);
@@ -56,8 +58,11 @@ const Home: NextPage = () => {
             setDropInputValue={setDropInputValue}
             setDropDetails={setDropDetails}
             goBack={() => setStep(step - 1)}
+            setStep={setStep}
           />
         )}
+        {step === 3 && <StepThree />}
+        {step === 4 && <StepFour />}
       </div>
     </Layout>
   );

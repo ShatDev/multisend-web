@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DropDetails } from '../../pages/drop';
 import Direct from './Direct';
 import AgainstCollection from './AgainstCollection';
@@ -18,6 +18,7 @@ interface StepTwoProps {
   setDropInputValue: (value: string) => void;
   setDropDetails: (value: DropDetails) => void;
   goBack: () => void;
+  setStep: (value: number) => void;
 }
 
 const StepOne = ({
@@ -29,56 +30,36 @@ const StepOne = ({
   setDropInputValue,
   setDropDetails,
   goBack,
+  setStep,
 }: StepTwoProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isManual, setIsManual] = useState(false);
   const [csvData, setCsvData] = useState();
 
   const handleERC20 = () => {
-    if (isManual) {
-      const { address, amount } = splitERC20Token(dropInputValue);
-      setDropDetails({
-        recipientAddress: address,
-        amount,
-      });
-    } else {
-      setDropDetails({
-        recipientAddress: [],
-        amount: [],
-      });
-    }
+    const { address, amount } = splitERC20Token(dropInputValue);
+    setDropDetails({
+      recipientAddress: address,
+      amount,
+    });
   };
 
   const handleERC721 = () => {
-    if (isManual) {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
-    } else {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
-    }
+    const { address, tokenId } = splitERC721Token(dropInputValue);
+    setDropDetails({
+      recipientAddress: address,
+      tokenId,
+      amount: [],
+    });
   };
 
   const handleERC1155 = () => {
-    if (isManual) {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
-    } else {
-      setDropDetails({
-        recipientAddress: [],
-        tokenId: [],
-        amount: [],
-      });
-    }
+    const { address, tokenId, amount } = splitERC1125Token(dropInputValue);
+    setDropDetails({
+      recipientAddress: address,
+      tokenId,
+      amount,
+    });
   };
 
   const onHandleProceed = () => {
@@ -103,6 +84,12 @@ const StepOne = ({
     setIsManual(true);
   };
 
+  useEffect(() => {
+    onHandleProceed();
+  }, [dropInputValue]);
+
+  console.log('dropDetails', dropDetails);
+
   return (
     <div>
       <div className="flex-row flex justify-between pb-10">
@@ -123,9 +110,10 @@ const StepOne = ({
       {dropType === 'AGAINST_COLLECTION' && <AgainstCollection />}
       <div className="flex justify-center mt-10">
         <StepTwoProceedButton
+          dropDetails={dropDetails}
           tokenType={tokenType}
           tokenAddress={tokenAddress}
-          setStep={() => {}}
+          setStep={setStep}
         />
       </div>
     </div>

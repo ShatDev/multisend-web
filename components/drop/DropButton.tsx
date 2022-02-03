@@ -14,7 +14,7 @@ interface ApproveButtonProps {
   setStep: (step: number) => void;
 }
 
-const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
+const DropButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
   const { active, account, activate } = useActiveWeb3React();
   const nftContract = useERC721Contract(address);
   const erc20Contract = useERC20Contract(address);
@@ -79,7 +79,7 @@ const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
     <div className="flex justify-center">
       {active ? (
         <Button isLoading={loading} onClick={onHandleProceed}>
-          Approve
+          Drop
         </Button>
       ) : (
         <Button onClick={() => activate(injected)}>Connect to metamask</Button>
@@ -88,4 +88,4 @@ const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
   );
 };
 
-export default ApproveButton;
+export default DropButton;
