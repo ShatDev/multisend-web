@@ -4,12 +4,13 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { DropDetails } from '../../pages/drop';
-import Button from '../elements/Button';
 import Direct from './Direct';
 import AgainstCollection from './AgainstCollection';
+import StepTwoProceedButton from './StepTwoProceedButton';
 import { splitERC1125Token, splitERC20Token, splitERC721Token } from './helpers';
 
 interface StepTwoProps {
+  tokenAddress: string;
   tokenType: string;
   dropType: string;
   dropInputValue: string;
@@ -20,6 +21,7 @@ interface StepTwoProps {
 }
 
 const StepOne = ({
+  tokenAddress,
   tokenType,
   dropType,
   dropInputValue,
@@ -120,9 +122,11 @@ const StepOne = ({
       )}
       {dropType === 'AGAINST_COLLECTION' && <AgainstCollection />}
       <div className="flex justify-center mt-10">
-        <Button isLoading={isLoading} onClick={onHandleProceed}>
-          Proceed
-        </Button>
+        <StepTwoProceedButton
+          tokenType={tokenType}
+          tokenAddress={tokenAddress}
+          setStep={() => {}}
+        />
       </div>
     </div>
   );

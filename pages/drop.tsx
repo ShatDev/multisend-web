@@ -15,7 +15,7 @@ export interface DropDetails {
 }
 
 const Home: NextPage = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [tokenType, setTokenType] = useState('ERC20');
   const [dropType, setDropType] = useState('DIRECT');
   const [tokenAddress, setTokenAddress] = useState<string | null>(null);
@@ -48,6 +48,7 @@ const Home: NextPage = () => {
         )}
         {step === 2 && (
           <StepTwo
+            tokenAddress={tokenAddress || ''}
             tokenType={tokenType}
             dropType={dropType}
             dropInputValue={dropInputValue}

@@ -33,3 +33,39 @@ export const getERC20AbiContract = (
   address: string,
   signer?: ethers.Signer | ethers.providers.Provider,
 ) => getContract(erc20Abi, address, signer);
+
+export const getERC721OwnersOfToken = async (tokens: string[], contract: any) => {
+  const promise = tokens.map(
+    (item: string) =>
+      new Promise((resolve, reject) => {
+        contract
+          .ownerOf(item)
+          .then((owner: string) => {
+            resolve({ tokenId: item, owner });
+          })
+          .catch((err: Error) => {
+            reject(err);
+          });
+      }),
+  );
+  const results = await Promise.all(promise);
+  return results;
+};
+
+export const getERC1155OwnersOfToken = async (tokens: string[], contract: any, account: string) => {
+  const promise = tokens.map(
+    (item: string) =>
+      new Promise((resolve, reject) => {
+        contract
+          .balanceOf(account, item)
+          .then((balance: string) => {
+            resolve({ tokenId: item, balance: balance.toString() });
+          })
+          .catch((err: Error) => {
+            reject(err);
+          });
+      }),
+  );
+  const results = await Promise.all(promise);
+  return results;
+};

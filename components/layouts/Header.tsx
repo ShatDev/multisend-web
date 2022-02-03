@@ -21,8 +21,6 @@ function Header({ active, open, logOut, account }: any) {
     }
   }, []);
 
-  console.log('chainId', chainId);
-
   const currentNetwork = (id: number | undefined) => {
     if (id === 137) {
       return {
@@ -48,6 +46,13 @@ function Header({ active, open, logOut, account }: any) {
     if (id === 3) {
       return {
         name: 'ROPSTEN',
+        symbol: 'ETH',
+        logo: '/images/crypto_icons/cryptocurrency_eth.png',
+      };
+    }
+    if (id === 4) {
+      return {
+        name: 'RINKEBY',
         symbol: 'ETH',
         logo: '/images/crypto_icons/cryptocurrency_eth.png',
       };

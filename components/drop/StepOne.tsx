@@ -91,7 +91,6 @@ const StepOne = ({
           <div className="flex justify-center">
             <StepOneProceedButton
               address={tokenAddress}
-              tokenType={tokenType}
               setIsValidAddress={setIsValidAddress}
               setStep={setStep}
             />
