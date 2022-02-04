@@ -11,10 +11,10 @@ import { injected } from '../../utils/connections';
 interface ApproveButtonProps {
   address: string;
   tokenType: string;
-  setStep: (step: number) => void;
+  onHandleStepThree: () => void;
 }
 
-const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
+const ApproveButton = ({ address, tokenType, onHandleStepThree }: ApproveButtonProps) => {
   const { active, account, activate } = useActiveWeb3React();
   const nftContract = useERC721Contract(address);
   const erc20Contract = useERC20Contract(address);
@@ -31,10 +31,10 @@ const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
           total,
         ]);
         await tx.wait();
-        setStep(2);
+        onHandleStepThree();
         setLoading(false);
       } else {
-        setStep(2);
+        onHandleStepThree();
         setLoading(false);
       }
     } catch (error: any) {
@@ -54,14 +54,13 @@ const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
           true,
         ]);
         await tx.wait();
-        setStep(2);
+        onHandleStepThree();
       } else {
-        setStep(2);
+        onHandleStepThree();
       }
       setLoading(false);
     } catch (error: any) {
       toast.error(error.message.split('\n')[0]);
-      console.log('error', error);
       setLoading(false);
     }
   };
@@ -79,7 +78,7 @@ const ApproveButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
     <div className="flex justify-center">
       {active ? (
         <Button isLoading={loading} onClick={onHandleProceed}>
-          Approve
+          Approve / Proceed
         </Button>
       ) : (
         <Button onClick={() => activate(injected)}>Connect to metamask</Button>

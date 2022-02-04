@@ -1,77 +1,90 @@
 /* eslint-disable no-unused-vars */
-import { ethers } from 'ethers';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useActiveWeb3React, useERC721Contract, useERC20Contract } from '../../hooks';
+import { useActiveWeb3React, useMultiSendContract } from '../../hooks';
 import { callWithEstimateGas } from '../../utils/estimateGas';
 import config from '../../utils/config';
 import Button from '../elements/Button';
 import { injected } from '../../utils/connections';
 
-interface ApproveButtonProps {
-  address: string;
-  tokenType: string;
-  setStep: (step: number) => void;
-}
-
-const DropButton = ({ address, tokenType, setStep }: ApproveButtonProps) => {
-  const { active, account, activate } = useActiveWeb3React();
-  const nftContract = useERC721Contract(address);
-  const erc20Contract = useERC20Contract(address);
+const DropButton = ({
+  tokenAddress,
+  address,
+  tokenId,
+  tokenType,
+  amount,
+  isChargeable,
+  handleUpdateSlot,
+}: any) => {
+  const { active, activate } = useActiveWeb3React();
+  const multiSendContract = useMultiSendContract(config.multiSendContractAddress);
   const [loading, setLoading] = useState(false);
 
-  const checkERC20Approval = async () => {
-    setLoading(true);
+  const dropERC721 = async () => {
     try {
-      const total = await erc20Contract.totalSupply();
-      const allowance = await erc20Contract.allowance(account, config.multiSendContractAddress);
-      if (allowance.toNumber() <= parseFloat(total.toString())) {
-        const tx = await callWithEstimateGas(erc20Contract, 'approve', [
-          config.multiSendContractAddress,
-          total,
-        ]);
-        await tx.wait();
-        setStep(2);
-        setLoading(false);
+      setLoading(true);
+      const tx = await callWithEstimateGas(multiSendContract, 'transmitERC721', [
+        tokenAddress,
+        address,
+        tokenId,
+        isChargeable,
+      ]);
+      const data = await tx.wait();
+      handleUpdateSlot({
+        status: 'success',
+        transactionHash: data.transactionHash,
+      });
+      setLoading(false);
+    } catch (err: any) {
+      if (err.error.message) {
+        toast.error(err.error.message);
       } else {
-        setStep(2);
-        setLoading(false);
+        toast.error(err.message.split('\n')[0]);
       }
-    } catch (error: any) {
-      toast.error(error.message.split('\n')[0]);
+      setLoading(false);
+    }
+  };
+  const dropERC1155 = async () => {
+    try {
+      setLoading(true);
+      const tx = await callWithEstimateGas(multiSendContract, 'transmitERC1155', [
+        tokenAddress,
+        address,
+        tokenId,
+        amount,
+        isChargeable,
+      ]);
+      await tx.wait();
+      setLoading(false);
+    } catch (err: any) {
+      toast.error(err.message.split('\n')[0]);
+      setLoading(false);
+    }
+  };
+  const dropERC20 = async () => {
+    try {
+      setLoading(true);
+      const tx = await callWithEstimateGas(multiSendContract, 'transmitERC20', [
+        tokenAddress,
+        address,
+        amount,
+        isChargeable,
+      ]);
+      await tx.wait();
+      setLoading(false);
+    } catch (err: any) {
+      toast.error(err.message.split('\n')[0]);
       setLoading(false);
     }
   };
 
-  const checkNFTApproval = async () => {
-    setLoading(true);
-    try {
-      const status = await nftContract.isApprovedForAll(account, config.multiSendContractAddress);
-      // console.log('status', status);
-      if (!status) {
-        const tx = await callWithEstimateGas(nftContract, 'setApprovalForAll', [
-          config.multiSendContractAddress,
-          true,
-        ]);
-        await tx.wait();
-        setStep(2);
-      } else {
-        setStep(2);
-      }
-      setLoading(false);
-    } catch (error: any) {
-      toast.error(error.message.split('\n')[0]);
-      console.log('error', error);
-      setLoading(false);
-    }
-  };
   const onHandleProceed = () => {
-    if (address) {
-      if (tokenType === 'ERC20') {
-        checkERC20Approval();
-      } else {
-        checkNFTApproval();
-      }
+    if (tokenType === 'ERC721') {
+      dropERC721();
+    } else if (tokenType === 'ERC1155') {
+      dropERC1155();
+    } else if (tokenType === 'ERC20') {
+      dropERC20();
     }
   };
 

@@ -2,6 +2,7 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import Head from 'next/head';
+import { chunk, forEach } from 'lodash';
 import StepOne from '../components/drop/StepOne';
 import StepTwo from '../components/drop/StepTwo';
 
@@ -16,8 +17,20 @@ export interface DropDetails {
   amount: string[];
 }
 
+export interface Slot {
+  id: number;
+  tokenAddress: string;
+  isChargeable: boolean;
+  tokenType: string;
+  address: string[];
+  tokenId: string[];
+  amount: string[];
+  status: string;
+  transactionHash: string;
+}
+
 const Home: NextPage = () => {
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
   const [tokenType, setTokenType] = useState('ERC20');
   const [dropType, setDropType] = useState('DIRECT');
   const [tokenAddress, setTokenAddress] = useState<string | null>(null);
@@ -26,8 +39,36 @@ const Home: NextPage = () => {
     tokenId: [],
     amount: [],
   });
-
   const [dropInputValue, setDropInputValue] = useState('');
+  const [slots, setSlots] = useState<Array<Slot>>([]);
+
+  const onHandleStepThree = () => {
+    const totalAddress = dropDetails.recipientAddress.length;
+    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / 2));
+    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / 2));
+    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / 2));
+    const newSlots: Array<Slot> = [];
+    forEach(address, (item: any, index: number) => {
+      newSlots.push({
+        id: index,
+        tokenAddress: tokenAddress || '',
+        isChargeable: dropType !== 'DIRECT',
+        tokenType,
+        address: item,
+        tokenId: tokenIds[index],
+        amount: quantities[index],
+        status: 'pending',
+        transactionHash: '',
+      });
+    });
+    setSlots(newSlots);
+    setStep(step + 1);
+  };
+
+  const handleUpdateSlot = (slot: Slot) => {
+    const index = slots.findIndex((obj: any) => obj.id === slot.id);
+    slots[index] = slot;
+  };
 
   return (
     <Layout isDrop>
@@ -61,8 +102,17 @@ const Home: NextPage = () => {
             setStep={setStep}
           />
         )}
-        {step === 3 && <StepThree />}
-        {step === 4 && <StepFour />}
+        {step === 3 && (
+          <StepThree
+            tokenAddress={tokenAddress || ''}
+            tokenType={tokenType}
+            dropDetails={dropDetails}
+            setStep={setStep}
+            dropType={dropType}
+            onHandleStepThree={onHandleStepThree}
+          />
+        )}
+        {step === 4 && <StepFour slots={slots} handleUpdateSlot={handleUpdateSlot} />}
       </div>
     </Layout>
   );
