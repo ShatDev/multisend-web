@@ -73,11 +73,21 @@ function Header({ active, open, logOut, account }: any) {
           </a>
         </Link>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center justify-center text-white text-lg">
-          <a className="mr-6">Home</a>
-          <a className="mr-6">Drop</a>
-          <a className="mr-6">Pricing</a>
-          <a className="mr-6">Tutorial</a>
-          <a className="mr-6">FAQ</a>
+          <Link href="/">
+            <a className="mr-6 cursor-pointer">Home</a>
+          </Link>
+          <Link href="/drop">
+            <a className="mr-6 cursor-pointer">Drop</a>
+          </Link>
+          <Link href="/pricing">
+            <a className="mr-6 cursor-pointer">Pricing</a>
+          </Link>
+          <Link href="/tutorial">
+            <a className="mr-6 cursor-pointer">Tutorial</a>
+          </Link>
+          <Link href="/faq">
+            <a className="mr-6 cursor-pointer">FAQ</a>
+          </Link>
         </nav>
         {!active && <Button onClick={open}>Connect Wallet</Button>}
         {active && (
