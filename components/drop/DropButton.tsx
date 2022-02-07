@@ -54,10 +54,18 @@ const DropButton = ({
         amount,
         isChargeable,
       ]);
-      await tx.wait();
+      const data = await tx.wait();
+      handleUpdateSlot({
+        status: 'success',
+        transactionHash: data.transactionHash,
+      });
       setLoading(false);
     } catch (err: any) {
-      toast.error(err.message.split('\n')[0]);
+      if (err.error.message) {
+        toast.error(err.error.message);
+      } else {
+        toast.error(err.message.split('\n')[0]);
+      }
       setLoading(false);
     }
   };
@@ -70,10 +78,18 @@ const DropButton = ({
         amount,
         isChargeable,
       ]);
-      await tx.wait();
+      const data = await tx.wait();
+      handleUpdateSlot({
+        status: 'success',
+        transactionHash: data.transactionHash,
+      });
       setLoading(false);
     } catch (err: any) {
-      toast.error(err.message.split('\n')[0]);
+      if (err.error.message) {
+        toast.error(err.error.message);
+      } else {
+        toast.error(err.message.split('\n')[0]);
+      }
       setLoading(false);
     }
   };

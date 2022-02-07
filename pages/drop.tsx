@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/role-has-required-aria-props */
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { chunk, forEach } from 'lodash';
 import StepOne from '../components/drop/StepOne';
@@ -27,6 +27,7 @@ export interface Slot {
   amount: string[];
   status: string;
   transactionHash: string;
+  range: string;
 }
 
 const Home: NextPage = () => {
@@ -42,11 +43,18 @@ const Home: NextPage = () => {
   const [dropInputValue, setDropInputValue] = useState('');
   const [slots, setSlots] = useState<Array<Slot>>([]);
 
+  const calculateRange = (number: number) => {
+    if (tokenType === 'ERC20') {
+      return `${number * 250 - 250 + 1} - ${number * 250}`;
+    }
+    return `${number * 100 - 100 + 1} - ${number * 100}`;
+  };
+
   const onHandleStepThree = () => {
     const totalAddress = dropDetails.recipientAddress.length;
-    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / 2));
-    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / 2));
-    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / 2));
+    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / 12));
+    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / 12));
+    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / 12));
     const newSlots: Array<Slot> = [];
     forEach(address, (item: any, index: number) => {
       newSlots.push({
@@ -59,16 +67,41 @@ const Home: NextPage = () => {
         amount: quantities[index],
         status: 'pending',
         transactionHash: '',
+        range: calculateRange(index + 1),
       });
     });
+    localStorage.setItem('slots', JSON.stringify(newSlots));
     setSlots(newSlots);
     setStep(step + 1);
   };
 
   const handleUpdateSlot = (slot: Slot) => {
-    const index = slots.findIndex((obj: any) => obj.id === slot.id);
-    slots[index] = slot;
+    const newSlots = slots;
+    const index = newSlots.findIndex((obj: any) => obj.id === slot.id);
+    newSlots[index] = slot;
+    localStorage.setItem('slots', JSON.stringify(slots));
   };
+
+  const startAgain = () => {
+    setStep(1);
+    setTokenType('ERC20');
+    setDropType('DIRECT');
+    setDropDetails({
+      recipientAddress: [],
+      tokenId: [],
+      amount: [],
+    });
+    setDropInputValue('');
+    localStorage.removeItem('slots');
+  };
+
+  useEffect(() => {
+    const newSlots = localStorage.getItem('slots');
+    if (newSlots) {
+      setSlots(JSON.parse(newSlots));
+      setStep(4);
+    }
+  }, []);
 
   return (
     <Layout isDrop>
@@ -112,7 +145,9 @@ const Home: NextPage = () => {
             onHandleStepThree={onHandleStepThree}
           />
         )}
-        {step === 4 && <StepFour slots={slots} handleUpdateSlot={handleUpdateSlot} />}
+        {step === 4 && (
+          <StepFour slots={slots} handleUpdateSlot={handleUpdateSlot} startAgain={startAgain} />
+        )}
       </div>
     </Layout>
   );

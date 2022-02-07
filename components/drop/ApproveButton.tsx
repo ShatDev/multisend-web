@@ -25,7 +25,7 @@ const ApproveButton = ({ address, tokenType, onHandleStepThree }: ApproveButtonP
     try {
       const total = await erc20Contract.totalSupply();
       const allowance = await erc20Contract.allowance(account, config.multiSendContractAddress);
-      if (allowance.toNumber() <= parseFloat(total.toString())) {
+      if (!allowance.eq(total)) {
         const tx = await callWithEstimateGas(erc20Contract, 'approve', [
           config.multiSendContractAddress,
           total,
@@ -37,8 +37,12 @@ const ApproveButton = ({ address, tokenType, onHandleStepThree }: ApproveButtonP
         onHandleStepThree();
         setLoading(false);
       }
-    } catch (error: any) {
-      toast.error(error.message.split('\n')[0]);
+    } catch (err: any) {
+      if (err.error.message) {
+        toast.error(err.error.message);
+      } else {
+        toast.error(err.message.split('\n')[0]);
+      }
       setLoading(false);
     }
   };
