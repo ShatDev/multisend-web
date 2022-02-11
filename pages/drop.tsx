@@ -45,10 +45,9 @@ const Home: NextPage = () => {
   const [slots, setSlots] = useState<Array<Slot>>([]);
 
   const calculateRange = (number: number) => {
-    if (tokenType === 'ERC20') {
-      return `${number * 250 - 250 + 1} - ${number * 250}`;
-    }
-    return `${number * 100 - 100 + 1} - ${number * 100}`;
+    // @ts-ignore
+    const perSlot = config.dropPerSlot[tokenType];
+    return `${number * perSlot - perSlot + 1} - ${number * perSlot}`;
   };
 
   const onHandleStepThree = () => {
