@@ -52,9 +52,9 @@ const Home: NextPage = () => {
 
   const onHandleStepThree = () => {
     const totalAddress = dropDetails.recipientAddress.length;
-    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / 12));
-    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / 12));
-    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / 12));
+    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / 1));
+    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / 1));
+    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / 1));
     const newSlots: Array<Slot> = [];
     forEach(address, (item: any, index: number) => {
       newSlots.push({

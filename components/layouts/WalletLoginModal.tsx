@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
 
 const wallets = [
   { id: 0, name: 'Metamask', logo: '/images/metamask_icon.png' },

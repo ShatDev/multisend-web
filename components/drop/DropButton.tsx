@@ -47,7 +47,8 @@ const DropButton = ({
   const dropERC1155 = async () => {
     try {
       setLoading(true);
-      const tx = await callWithEstimateGas(multiSendContract, 'transmitERC1155', [
+      console.log('dropERC1155', tokenAddress, address, tokenId, amount, isChargeable);
+      const tx = await callWithEstimateGas(multiSendContract, 'transmitERC1125', [
         tokenAddress,
         address,
         tokenId,
@@ -61,11 +62,12 @@ const DropButton = ({
       });
       setLoading(false);
     } catch (err: any) {
-      if (err.error.message) {
+      if (err.error && err.error.message) {
         toast.error(err.error.message);
       } else {
         toast.error(err.message.split('\n')[0]);
       }
+      console.log(err);
       setLoading(false);
     }
   };

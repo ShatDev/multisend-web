@@ -40,37 +40,36 @@ const customStyles = {
   //   },
 };
 
-interface IAsyncMultiOptions {
-  value: string;
-  label: string;
-  color: string;
-}
+// interface IAsyncMultiOptions {
+//   value: string;
+//   label: string;
+//   color: string;
+// }
 
-const options = [
-  { value: 'ocean', label: 'Ocean', color: '#00B8D9' },
-  { value: 'blue', label: 'Blue', color: '#0052CC' },
-  { value: 'purple', label: 'Purple', color: '#5243AA' },
-  { value: 'red', label: 'Red', color: '#FF5630' },
-  { value: 'orange', label: 'Orange', color: '#FF8B00' },
-  { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-  { value: 'green', label: 'Green', color: '#36B37E' },
-  { value: 'forest', label: 'Forest', color: '#00875A' },
-  { value: 'slate', label: 'Slate', color: '#253858' },
-  { value: 'silver', label: 'Silver', color: '#666666' },
-];
+// const options = [
+//   { value: 'ocean', label: 'Ocean', color: '#00B8D9' },
+//   { value: 'blue', label: 'Blue', color: '#0052CC' },
+//   { value: 'purple', label: 'Purple', color: '#5243AA' },
+//   { value: 'red', label: 'Red', color: '#FF5630' },
+//   { value: 'orange', label: 'Orange', color: '#FF8B00' },
+//   { value: 'yellow', label: 'Yellow', color: '#FFC400' },
+//   { value: 'green', label: 'Green', color: '#36B37E' },
+//   { value: 'forest', label: 'Forest', color: '#00875A' },
+//   { value: 'slate', label: 'Slate', color: '#253858' },
+//   { value: 'silver', label: 'Silver', color: '#666666' },
+// ];
 
-const getERC20TokenOptions = async (inputValue: string) => {
-  const response: IAsyncMultiOptions[] = options;
-  console.log(inputValue);
-  return response;
-};
+// const getERC20TokenOptions = async () => {
+//   const response: IAsyncMultiOptions[] = options;
+//   return response;
+// };
 
-const promiseOptions = (inputValue: string) =>
-  new Promise<IAsyncMultiOptions[]>((resolve) => {
-    setTimeout(() => {
-      resolve(getERC20TokenOptions(inputValue));
-    }, 1000);
-  });
+// const promiseOptions = (inputValue: string) =>
+//   new Promise<IAsyncMultiOptions[]>((resolve) => {
+//     setTimeout(() => {
+//       resolve(getERC20TokenOptions(inputValue));
+//     }, 1000);
+//   });
 
 export default function AsyncMultiSelect() {
   return (
@@ -80,7 +79,7 @@ export default function AsyncMultiSelect() {
       isMulti
       cacheOptions
       components={animatedComponents}
-      loadOptions={promiseOptions}
+      // loadOptions={promiseOptions}
     />
   );
 }

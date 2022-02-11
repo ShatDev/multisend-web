@@ -1,5 +1,3 @@
-import React from 'react';
-
 const GradientCard = ({ title, description, isAbsolute }: any) => (
   <div
     className={`card_gradient px-7 py-14 border-4 border-cyan-300 w-full md:w-3/12 mb-4 ${
