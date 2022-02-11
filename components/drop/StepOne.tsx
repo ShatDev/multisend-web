@@ -22,7 +22,7 @@ const tokenTypes = ['ERC20', 'ERC721', 'ERC1155'];
 
 const dropTypes = [
   { key: 'DIRECT', value: 'Direct' },
-  { key: 'AGAINST_COLLECTION', value: 'Against Collection' },
+  // { key: 'AGAINST_COLLECTION', value: 'Against Collection' },
 ];
 
 const StepOne = ({
