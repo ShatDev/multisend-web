@@ -92,6 +92,9 @@ const StepOneProceedButton = ({
         setLoading(false);
       }
     } catch (err) {
+      setError(
+        `Please check your input and try again. If the problem persists, please contact us.`,
+      );
       setLoading(false);
     }
   };
