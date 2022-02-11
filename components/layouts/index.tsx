@@ -44,7 +44,12 @@ function Layout({ isDrop = false, children }: { isDrop?: boolean; children: Reac
         logOut={() => deactivate()}
       />
       {accountInfoPopupOpen && <AccountInfoModal close={() => setAccountInfoPopupOpen(false)} />}
-      {chooseWalletPopupOpen && <WalletLoginModal close={() => setChooseWalletPopupOpen(false)} />}
+      {chooseWalletPopupOpen && (
+        <WalletLoginModal
+          close={() => setChooseWalletPopupOpen(false)}
+          connect={() => activate(injected)}
+        />
+      )}
       <div>{children}</div>
       <Footer />
     </div>
