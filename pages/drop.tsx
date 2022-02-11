@@ -9,6 +9,7 @@ import StepTwo from '../components/drop/StepTwo';
 import Layout from '../components/layouts';
 import StepThree from '../components/drop/StepThree';
 import StepFour from '../components/drop/StepFour';
+import config from '../utils/config';
 // import OverviewTable from '../components/home/OverviewTable';
 
 export interface DropDetails {
@@ -51,10 +52,12 @@ const Home: NextPage = () => {
   };
 
   const onHandleStepThree = () => {
+    // @ts-ignore
+    const perSlot = config.dropPerSlot[tokenType];
     const totalAddress = dropDetails.recipientAddress.length;
-    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / 1));
-    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / 1));
-    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / 1));
+    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / perSlot));
+    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / perSlot));
+    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / perSlot));
     const newSlots: Array<Slot> = [];
     forEach(address, (item: any, index: number) => {
       newSlots.push({
