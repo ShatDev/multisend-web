@@ -54,9 +54,15 @@ const Home: NextPage = () => {
     // @ts-ignore
     const perSlot = config.dropPerSlot[tokenType];
     const totalAddress = dropDetails.recipientAddress.length;
-    const address = chunk(dropDetails.recipientAddress, Math.ceil(totalAddress / perSlot));
-    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / perSlot));
-    const quantities = chunk(dropDetails.amount, Math.ceil(totalAddress / perSlot));
+    const address = chunk(
+      dropDetails.recipientAddress,
+      Math.ceil(totalAddress / (totalAddress / perSlot)),
+    );
+    const tokenIds = chunk(dropDetails.tokenId, Math.ceil(totalAddress / (totalAddress / perSlot)));
+    const quantities = chunk(
+      dropDetails.amount,
+      Math.ceil(totalAddress / (totalAddress / perSlot)),
+    );
     const newSlots: Array<Slot> = [];
     forEach(address, (item: any, index: number) => {
       newSlots.push({

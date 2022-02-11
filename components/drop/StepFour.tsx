@@ -77,7 +77,7 @@ const StepFour = ({ slots, handleUpdateSlot, startAgain }: StepFourProps) => {
       </div>
       <div className="mt-12 max-h-96 overflow-x-auto">
         <div className="flex justify-center items-center">
-          <table className="table-auto w-2/3 py-5">
+          <table className="table-auto w-4/5 py-5">
             <tbody>
               {slots.map((slot) => (
                 <Element slot={slot} handleUpdateSlot={handleUpdateSlot} />
