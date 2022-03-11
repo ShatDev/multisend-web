@@ -1,7 +1,7 @@
 import sample from 'lodash/sample';
 
 // Array of available nodes to connect to
-export const nodes = ['https://polygon-mumbai.g.alchemy.com/v2/4nAcRCaih85vrP44VgnEIaNrEPdfw70d'];
+export const nodes = ['https://smartbch.fountainhead.cash/mainnet '];
 
 const getNodeUrl = () => sample(nodes);
 
